@@ -3,13 +3,16 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import { Context } from '../context';
+import { RootTabScreenProps } from '../types';
 
-export default function TabTwoScreen() {
+export default function NotificationsScreen({ navigation }: RootTabScreenProps<'Notifications'>) {
+  const { state } = React.useContext(Context);
+  console.log(state)
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
+      <Text style={styles.title}>Notifications</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
     </View>
   );
 }
