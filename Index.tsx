@@ -10,6 +10,7 @@ import LoginScreen from './screens/LoginScreen';
 import { Context } from './context';
 import { loginAction, logoutAction } from './actions/login.action';
 import { useToast } from 'react-native-styled-toast';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const loginService = new LoginService();
 
@@ -27,14 +28,18 @@ export default function IndexApp() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
   const { state, dispatch } = useContext(Context);
-   const { toast } = useToast()
+   
   const onSubmit = (data: { username: string; password: string }) => {
     loginService.login(data.username, data.password).then(user => {
       if (user.success) {
         dispatch(loginAction(user.payload));
       } else {
-        const { payload : { errorMsg } } = user;
-        toast({ message: errorMsg, intent: 'ERROR' })
+        const { payload : { errorMsg, errorCode } } = user;
+        showMessage({
+          message: errorCode,
+          description: errorMsg,
+          type: "danger",
+        });
         dispatch(logoutAction());
       }
     }).catch(error => { 

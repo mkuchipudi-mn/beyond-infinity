@@ -19,7 +19,7 @@ function LoginComponent( {onSubmit} : {onSubmit : any}) {
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-      <Image source={{uri: imageURI}} style={{height: 60, position : 'relative' , left : 100 }} />
+      <Image source={{uri: imageURI}} style={{height: 60, position : 'relative' , left : 90 }} />
         <FormBuilder
           control={control}
           setFocus={setFocus}

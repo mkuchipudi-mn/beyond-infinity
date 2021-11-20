@@ -1,15 +1,21 @@
 import React from 'react';
 import IndexApp from './Index';
 import { Store } from './store/store';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { ThemeProvider } from 'styled-components';
 import { ToastProvider } from 'react-native-styled-toast';
+import FlashMessage from "react-native-flash-message";
+
+const theme = {
+  main: 'mediumseagreen',
+};
 
 export default function App() {
   return (
     <Store>
-      <ToastProvider>
-        <IndexApp />
-      </ToastProvider>
+      <ThemeProvider theme={theme}>
+        <FlashMessage position="top" />
+          <IndexApp />
+      </ThemeProvider>
     </Store>
   );
 }

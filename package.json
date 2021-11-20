@@ -33,6 +33,7 @@
     "react-hook-form": "^7.20.2",
     "react-native": "0.64.3",
     "react-native-dropdownalert": "^4.3.0",
+    "react-native-flash-message": "^0.2.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-paper": "^4.10.1",
     "react-native-paper-form-builder": "^2.1.2",
