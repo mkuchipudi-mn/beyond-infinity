@@ -2,14 +2,16 @@
 
 //const base_url = 'http://mnipdmkuchipudi.modeln.com:5525/modeln';
 const base_url = 'http://localhost:3006/modeln';
-var authUrl = '/rest/authenticate/session/login';
+var authUrl = '/rest/NotifMsg/search';
+
+
+
 const body = { username: 'Administrator', password: 'Administrator' };
 
-export default class LoginService {
+export default class NotifService {
   constructor() {}
 
-  public async login(username: string, password: string) {
-    const body = { username, password };
+  public async search(body: any) {
     return fetch( base_url + authUrl, {
       method: 'post',
       body: JSON.stringify(body),
@@ -20,5 +22,4 @@ export default class LoginService {
     });
   }
 
-  public async logout() {}
 }

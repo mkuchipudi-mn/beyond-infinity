@@ -4,11 +4,17 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { Context } from '../context';
+import NotifService from '../services/Notif.service';
 import { RootTabScreenProps } from '../types';
+
+const notifService = new NotifService();
+
+
 
 export default function NotificationsScreen({ navigation }: RootTabScreenProps<'Notifications'>) {
   const { state } = React.useContext(Context);
   console.log(state)
+  notifService.search({});
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Notifications</Text>
