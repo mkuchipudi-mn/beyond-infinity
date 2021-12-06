@@ -1,3 +1,5 @@
+import initialState from "./global.state";
+
 const LoginReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'LOGIN':
@@ -7,10 +9,8 @@ const LoginReducer = (state: any, action: any) => {
       };
 
     case 'LOGOUT':
-      return {
-        ...state,
-        user: null,
-      };
+      console.log(initialState);
+      return initialState;
     default:
       return state;
   }

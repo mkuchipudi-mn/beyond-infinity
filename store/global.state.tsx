@@ -3,6 +3,11 @@ const initialState = {
     user: null
   },
   bootstrap : null,
+  notifications: {
+    data: [],
+    notificationsLoading: false,
+  },
+  cards: []
 };
 
 

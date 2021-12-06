@@ -13,7 +13,7 @@ import { Button, ColorSchemeName, Pressable, Text } from 'react-native';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { Context } from '../context';
-import { logoutAction } from '../actions/login.action';
+import { logoutAction } from '../redux/actions/login.action';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import SearchCardsScreen from '../screens/SearchCardsScreen';
 import ApprovalsScreen from '../screens/Approvals/ApprovalsScreen';

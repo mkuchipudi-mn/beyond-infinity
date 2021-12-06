@@ -1,12 +1,9 @@
-
-
 //const base_url = 'http://mnipdmkuchipudi.modeln.com:5525/modeln';
-const base_url = 'http://localhost:3006/modeln';
+const base_url = 'http://localhost:13006/modeln';
 var authUrl = '/rest/authenticate/session/login';
 const body = { username: 'Administrator', password: 'Administrator' };
 
 export default class LoginService {
-  constructor() {}
 
   public async login(username: string, password: string) {
     const body = { username, password };

@@ -4,6 +4,8 @@ import { Context } from '../context';
 import initialState from './global.state';
 import SearchCardsReducer from './searchcards.reducer';
 import ApprovalsReducer from './approvals.reducer';
+import NotificationsReducer from './notifications.reducer'
+
 
 
 const combineReducers = (reducers : any) => {
@@ -19,7 +21,8 @@ const combineReducers = (reducers : any) => {
 export const reducer = combineReducers({
   login: loginReducer,
   approve: ApprovalsReducer,
-  cards: SearchCardsReducer
+  cards: SearchCardsReducer,
+  notifications: NotificationsReducer,
 });
 
 
