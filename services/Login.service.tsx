@@ -1,13 +1,10 @@
-//const base_url = 'http://mnipdmkuchipudi.modeln.com:5525/modeln';
-const base_url = 'http://localhost:13006/modeln';
-var authUrl = '/rest/authenticate/session/login';
-const body = { username: 'Administrator', password: 'Administrator' };
+import { BASE_SERVICE_URL } from '../config';
 
 export default class LoginService {
 
   public async login(username: string, password: string) {
     const body = { username, password };
-    return fetch( base_url + authUrl, {
+    return fetch( BASE_SERVICE_URL + '/rest/authenticate/session/login', {
       method: 'post',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' },
