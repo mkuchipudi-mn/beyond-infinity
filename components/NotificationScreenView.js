@@ -9,8 +9,12 @@ import {
   StatusBar,
 } from "react-native";
 
+import NotifService from "../services/Notif.service";
+
 import { SwipeListView } from "react-native-swipe-list-view";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+const notifService = new NotifService();
 
 const NotificationScreenView = ({ notificationsdata, navigation }) => {
   const [listData, setListData] = useState(
@@ -22,6 +26,8 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
         notificationItem["objectIdentifier"].uniqueObjIdString,
       details: notificationItem["dateCreated"].date,
       unread: notificationItem["Unread"],
+      objectIdentifier: notificationItem["objectIdentifier"].uniqueObjIdString,
+      pk: notificationItem["objectIdentifier"].pk,
     }))
   );
 
@@ -56,9 +62,18 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
   const onRightAction = (rowKey) => {
     console.log("onRightAction", rowKey);
   };
-
   const onLeftAction = (rowKey) => {
     console.log("onLeftAction", rowKey);
+  };
+
+  const showNotifDetailView = (data, rowKey) => { 
+    console.log(data);
+    if (data.item.unread) {
+      notifService
+        .unReadFlagUpdate(data.item.objectIdentifier, data.item.pk)
+        .then((data) => {});
+    }
+    setShowDetails(!showDetails);
   };
 
   const VisibleItem = (props) => {
@@ -86,13 +101,20 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
       >
         <TouchableHighlight
           style={styles.rowFrontVisible}
-          onPress={() => setShowDetails(!showDetails)}
+          onPress={() => showNotifDetailView(data, data.item.key)}
           underlayColor={"#aaa"}
         >
           <View>
-            <Text style={styles.title} numberOfLines={1}>
-              {data.item.title}
-            </Text>
+            {data.item.unread && (
+              <Text style={styles.titleUnRead} numberOfLines={1}>
+                {data.item.title}
+              </Text>
+            )}
+            {!data.item.unread && (
+              <Text style={styles.titleRead} numberOfLines={1}>
+                {data.item.title}
+              </Text>
+            )}
             <Text style={styles.details} numberOfLines={1}>
               {data.item.details}
             </Text>
@@ -219,32 +241,35 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
       {/* <StatusBar backgroundColor="#FF6347" barStyle="light-content"/> */}
-      { !showDetails && <SwipeListView
-        data={listData}
-        renderItem={renderItem}
-        renderHiddenItem={renderHiddenItem}
-        leftOpenValue={75}
-        rightOpenValue={-150}
-        disableRightSwipe
-        onRowDidOpen={onRowDidOpen}
-        leftActivationValue={100}
-        rightActivationValue={-200}
-        leftActionValue={0}
-        rightActionValue={-500}
-        onLeftAction={onLeftAction}
-        onRightAction={onRightAction}
-        onLeftActionStatusChange={onLeftActionStatusChange}
-        onRightActionStatusChange={onRightActionStatusChange}
-      />
-      }
-      {showDetails && 
-      
-      <View style={styles.detailscontainer}>
-      <Text style={styles.title}>Notification Details</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
-      
-      }
+      {!showDetails && (
+        <SwipeListView
+          data={listData}
+          renderItem={renderItem}
+          renderHiddenItem={renderHiddenItem}
+          leftOpenValue={75}
+          rightOpenValue={-150}
+          disableRightSwipe
+          onRowDidOpen={onRowDidOpen}
+          leftActivationValue={100}
+          rightActivationValue={-200}
+          leftActionValue={0}
+          rightActionValue={-500}
+          onLeftAction={onLeftAction}
+          onRightAction={onRightAction}
+          onLeftActionStatusChange={onLeftActionStatusChange}
+          onRightActionStatusChange={onRightActionStatusChange}
+        />
+      )}
+      {showDetails && (
+        <View style={styles.detailscontainer}>
+          <Text style={styles.title}>Notification Details</Text>
+          <View
+            style={styles.separator}
+            lightColor="#eee"
+            darkColor="rgba(255,255,255,0.1)"
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -313,11 +338,17 @@ const styles = StyleSheet.create({
     width: 13,
     marginRight: 7,
   },
-  title: {
+  titleRead: {
     fontSize: 14,
     fontWeight: "bold",
     marginBottom: 5,
     color: "#666",
+  },
+  titleUnRead: {
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "blue",
   },
   details: {
     fontSize: 12,
@@ -326,12 +357,12 @@ const styles = StyleSheet.create({
 
   detailscontainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });
