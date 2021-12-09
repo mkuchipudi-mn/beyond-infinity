@@ -1,32 +1,42 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import SearchCard from '../components/SearchCard';
+import SearchCardsService from '../services/SearchCards.service';
 import { RootTabScreenProps } from '../types';
+import { mapSearchCard } from '../utils/map';
 
+const searchCardsService = new SearchCardsService();
 export default function SearchCardsScreen({ navigation }: RootTabScreenProps<'SearchCards'>) {
+  
+  const [cards, setCards] = React.useState<any>([]);
+  
+  const init = async () => { 
+    const response = await searchCardsService.getSearchCards();
+    setCards(mapSearchCard(response.data));
+  }
+  
+  React.useEffect(() => {
+    init();
+  },[])
+  
+
+  if(!cards.length)
+    return <ActivityIndicator size="small" color="#0000ff" />
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>SearchCards</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
+    <ScrollView>
+      { cards.map((card: any) => <SearchCard {...card}></SearchCard>)}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    padding: 20,
+    backgroundColor: '#ecf0f1',
   },
 });

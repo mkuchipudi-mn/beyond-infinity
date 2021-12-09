@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,29 +7,17 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   StatusBar,
-} from "react-native";
+} from 'react-native';
 
-import NotifService from "../services/Notif.service";
+import NotifService from '../services/Notif.service';
 
-import { SwipeListView } from "react-native-swipe-list-view";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { SwipeListView } from 'react-native-swipe-list-view';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const notifService = new NotifService();
 
-const NotificationScreenView = ({ notificationsdata, navigation }) => {
-  const [listData, setListData] = useState(
-    notificationsdata.map((notificationItem, index) => ({
-      key: `${index}`,
-      title:
-        notificationItem["Resource.Description"] +
-        " for " +
-        notificationItem["objectIdentifier"].uniqueObjIdString,
-      details: notificationItem["dateCreated"].date,
-      unread: notificationItem["Unread"],
-      objectIdentifier: notificationItem["objectIdentifier"].uniqueObjIdString,
-      pk: notificationItem["objectIdentifier"].pk,
-    }))
-  );
+const NotificationScreenView = ({ notifications, navigation }) => {
+  const [listData, setListData] = useState(notifications);
 
   const [showDetails, setShowDetails] = useState(false);
 
@@ -48,42 +36,34 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
   };
 
   const onRowDidOpen = (rowKey) => {
-    console.log("This row opened", rowKey);
+    console.log('This row opened', rowKey);
   };
 
   const onLeftActionStatusChange = (rowKey) => {
-    console.log("onLeftActionStatusChange", rowKey);
+    console.log('onLeftActionStatusChange', rowKey);
   };
 
   const onRightActionStatusChange = (rowKey) => {
-    console.log("onRightActionStatusChange", rowKey);
+    console.log('onRightActionStatusChange', rowKey);
   };
 
   const onRightAction = (rowKey) => {
-    console.log("onRightAction", rowKey);
+    console.log('onRightAction', rowKey);
   };
   const onLeftAction = (rowKey) => {
-    console.log("onLeftAction", rowKey);
+    console.log('onLeftAction', rowKey);
   };
 
-  const showNotifDetailView = (data, rowKey) => { 
+  const showNotifDetailView = (data, rowKey) => {
     console.log(data);
     if (data.item.unread) {
-      notifService
-        .unReadFlagUpdate(data.item.objectIdentifier, data.item.pk)
-        .then((data) => {});
+      notifService.unReadFlagUpdate(data.item.objectIdentifier, data.item.pk).then((data) => {});
     }
     setShowDetails(!showDetails);
   };
 
   const VisibleItem = (props) => {
-    const {
-      data,
-      rowHeightAnimatedValue,
-      removeRow,
-      leftActionState,
-      rightActionState,
-    } = props;
+    const { data, rowHeightAnimatedValue, removeRow, leftActionState, rightActionState } = props;
 
     if (rightActionState) {
       Animated.timing(rowHeightAnimatedValue, {
@@ -96,13 +76,11 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
     }
 
     return (
-      <Animated.View
-        style={[styles.rowFront, { height: rowHeightAnimatedValue }]}
-      >
+      <Animated.View style={[styles.rowFront, { height: rowHeightAnimatedValue }]}>
         <TouchableHighlight
           style={styles.rowFrontVisible}
           onPress={() => showNotifDetailView(data, data.item.key)}
-          underlayColor={"#aaa"}
+          underlayColor={'#aaa'}
         >
           <View>
             {data.item.unread && (
@@ -160,9 +138,7 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
     }
 
     return (
-      <Animated.View
-        style={[styles.rowBack, { height: rowHeightAnimatedValue }]}
-      >
+      <Animated.View style={[styles.rowBack, { height: rowHeightAnimatedValue }]}>
         <Text>Left</Text>
         {!leftActionActivated && (
           <TouchableOpacity
@@ -170,10 +146,10 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
             onPress={onClose}
           >
             <MaterialCommunityIcons
-              name="close-circle-outline"
+              name='close-circle-outline'
               size={25}
               style={styles.trash}
-              color="#fff"
+              color='#fff'
             />
           </TouchableOpacity>
         )}
@@ -201,18 +177,14 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
                         scale: swipeAnimatedValue.interpolate({
                           inputRange: [-90, -45],
                           outputRange: [1, 0],
-                          extrapolate: "clamp",
+                          extrapolate: 'clamp',
                         }),
                       },
                     ],
                   },
                 ]}
               >
-                <MaterialCommunityIcons
-                  name="trash-can-outline"
-                  size={25}
-                  color="#fff"
-                />
+                <MaterialCommunityIcons name='trash-can-outline' size={25} color='#fff' />
               </Animated.View>
             </TouchableOpacity>
           </Animated.View>
@@ -239,7 +211,7 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle='dark-content' />
       {/* <StatusBar backgroundColor="#FF6347" barStyle="light-content"/> */}
       {!showDetails && (
         <SwipeListView
@@ -263,11 +235,7 @@ const NotificationScreenView = ({ notificationsdata, navigation }) => {
       {showDetails && (
         <View style={styles.detailscontainer}>
           <Text style={styles.title}>Notification Details</Text>
-          <View
-            style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
-          />
+          <View style={styles.separator} lightColor='#eee' darkColor='rgba(255,255,255,0.1)' />
         </View>
       )}
     </View>
@@ -278,57 +246,57 @@ export default NotificationScreenView;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f4f4f4",
+    backgroundColor: '#f4f4f4',
     flex: 1,
   },
   backTextWhite: {
-    color: "#FFF",
+    color: '#FFF',
   },
   rowFront: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     borderRadius: 5,
     height: 60,
     margin: 5,
     marginBottom: 15,
-    shadowColor: "#999",
+    shadowColor: '#999',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
   },
   rowFrontVisible: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     borderRadius: 5,
     height: 60,
     padding: 10,
     marginBottom: 15,
   },
   rowBack: {
-    alignItems: "center",
-    backgroundColor: "#DDD",
+    alignItems: 'center',
+    backgroundColor: '#DDD',
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingLeft: 15,
     margin: 5,
     marginBottom: 15,
     borderRadius: 5,
   },
   backRightBtn: {
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
     bottom: 0,
-    justifyContent: "center",
-    position: "absolute",
+    justifyContent: 'center',
+    position: 'absolute',
     top: 0,
     width: 75,
     paddingRight: 17,
   },
   backRightBtnLeft: {
-    backgroundColor: "#1f65ff",
+    backgroundColor: '#1f65ff',
     right: 75,
   },
   backRightBtnRight: {
-    backgroundColor: "red",
+    backgroundColor: 'red',
     right: 0,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
@@ -340,29 +308,29 @@ const styles = StyleSheet.create({
   },
   titleRead: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 5,
-    color: "#666",
+    color: '#666',
   },
   titleUnRead: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 5,
-    color: "blue",
+    color: 'blue',
   },
   details: {
     fontSize: 12,
-    color: "#999",
+    color: '#999',
   },
 
   detailscontainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: "80%",
+    width: '80%',
   },
 });

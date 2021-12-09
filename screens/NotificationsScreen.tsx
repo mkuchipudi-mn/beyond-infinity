@@ -9,81 +9,34 @@ import { RootTabScreenProps } from '../types';
 import NotifService from "../services/Notif.service";
 import { SET_ALL_NOTIF } from "../redux/types";
 import NotificationScreenView from '../components/NotificationScreenView';
+import { ActivityIndicator } from 'react-native-paper';
+import { mapNotifications } from '../utils/map';
 
 
 const notifService = new NotifService();
 
 export default function NotificationsScreen({ navigation }: RootTabScreenProps<'Notifications'>) {
   const { state, dispatch } = React.useContext(Context);
-  console.log(state);
-
-
-
-
-  // useEffect(() => {
-
-  //   async function fecthAll() {
-  //     debugger;
-  //     await getAllNotifications();
-  //   }
-  //   if(!state.notifications.notificationsLoading) {
-  //     fecthAll();
-  //   }
-  // }, [state.notifications.notificationsLoading]);
-  // //dispatch(getAllNotifications()); 
-
-  // console.log(state.notifications);
-
-  // // useEffect(() => {
-
-  // // },
-  // // [])
-
-  if (!state.notifications.notificationsLoading) {
-    notifService.search().then((data: any) => {
-      dispatch({
-        type: SET_ALL_NOTIF,
-        payload: data
-      });
-      console.log(data);
-    });
-  }
-  var mappedNotifications: any = [];
-
-  if (state.notifications.data && state.notifications.data.length > 0) {
-    console.log(state.notifications.data);
-    mappedNotifications = generateData(state.notifications.data);
-    console.log('-----mapped notifications -------')
-    console.log(mappedNotifications);
+  const [notifications, setNotifications] = React.useState<any>([]);
+  const init = async () => { 
+    const response = await notifService.search();
+    setNotifications(mapNotifications(response.data));
   }
 
+  React.useEffect(() => {
+    init();
+  },[])
 
+  if(!notifications.length)
+    return <ActivityIndicator size="small" color="#0000ff" />
+  
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Notifications</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-      {Array.isArray(mappedNotifications) && mappedNotifications.length > 0 && ( 
-        <NotificationScreenView notificationsdata={mappedNotifications} navigation={navigation}/>
-      )}
+      <NotificationScreenView notifications={notifications} navigation={navigation}/>
     </View>
   );
 }
 
-
-function generateData(data: any) {
-  const result: any = [];
-  data.forEach((item: any) => {
-    if (item) {
-      const childResult: any = {};
-      item.forEach((child: any) => {
-        childResult[`${child['name']}`] = child['value'];
-      });
-      result.push(childResult);
-    }
-  }
-  );
-  return result;
-}
 
 const styles = StyleSheet.create({
   container: {

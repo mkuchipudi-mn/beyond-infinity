@@ -58,7 +58,6 @@ function RootDrawer() {
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
       <Drawer.Screen name="SearchCards" component={SearchCardsScreen} />
       <Drawer.Screen name="Approvals" component={ApprovalsScreen} />
-      <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
   );
 }
