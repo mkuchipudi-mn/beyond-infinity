@@ -17,9 +17,20 @@ export const mapNotifications = (data: any) => {
       item.forEach((child: any) => {
         childResult[`${child['name']}`] = child['value'];
       });
-      result.push(mapNotification(childResult,index));
+      result.push(mapNotification(childResult, index));
     }
   });
+  if (result.length === 0) {
+    return [{
+      key: 1,
+      title: 'pavan ,  u got a notif dude',
+      details: 1024567,
+      unread: false,
+      objectIdentifier: 1,
+      pk: 1,
+    }
+    ]
+  }
   return result;
 };
 
