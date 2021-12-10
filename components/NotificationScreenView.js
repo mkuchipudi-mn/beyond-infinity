@@ -22,6 +22,13 @@ const NotificationScreenView = ({ notifications, navigation }) => {
 
   const [showDetails, setShowDetails] = useState(false);
 
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setShowDetails(false);
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
       rowMap[rowKey].closeRow();
