@@ -25,14 +25,15 @@ const notifService = new NotifService();
 import { Button, TextInput } from 'react-native-paper';
 
 export const NotificationsDetailsView = () => {
-    const [acceptModal, setAcceptModal] = useState(false);
-    const [rejectModal, setRejectModal] = useState(false);
+    const [actionModal, setActionModal] = useState(false);
+    //const [rejectModal, setRejectModal] = useState(false);
     const [confirmPopup, setconfirmPopup] = useState(false);
+    const [actiontype, setActiontype] = useState();
     const detailsMeta = require('../config/resources/Notifications/DetailsPage/index.json');
-    const doReject = () => {
+    const doAction = () => {
         Alert.alert('Claim Reject', 'your claim has been rejected');
         //perform action
-        setRejectModal(false);
+        setActionModal(false);
         setconfirmPopup(true);
     };
 
@@ -51,6 +52,10 @@ export const NotificationsDetailsView = () => {
             claimsdetailsMap[item.name] = item.value;
     });
     const listData = [];
+    const setAction = (actiontype) => {
+        setActionModal(true);
+        setActiontype(actiontype);
+    }
     detailsMeta.forEach(item => { listData.push(item.name + ':' + claimsdetailsMap[item.field] || ''); });
 
     return (
@@ -72,7 +77,7 @@ export const NotificationsDetailsView = () => {
                     setconfirmPopup(false);
                 }}
             >
-                <Text> Your claim has been successfully rejected </Text>
+                <Text> Your claim has been successfully {actiontype}ed </Text>
                 <Button
                     mode={'contained'}
                     onPress={() => setconfirmPopup(false)}
@@ -80,30 +85,14 @@ export const NotificationsDetailsView = () => {
                     Home Page
                 </Button>
             </Modal>
+
             <Modal
                 animationType="slide"
                 transparent={false}
-                visible={acceptModal}
+                visible={actionModal}
                 onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
-                    setAcceptModal(false);
-                }}
-            >
-                <TextInput placeholder="Type your comment here" />
-                <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setAcceptModal(false)}
-                >
-                    <Text style={styles.textStyle}>Cancel</Text>
-                </Pressable>
-            </Modal>
-            <Modal
-                animationType="slide"
-                transparent={false}
-                visible={rejectModal}
-                onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                    setRejectModal(false);
+                    setActionModal(false);
                 }}
             >
                 <TextInput placeholder="Type your comment here" />
@@ -111,15 +100,15 @@ export const NotificationsDetailsView = () => {
                     <View style={styles.buttonContainer}>
                         <Button
                             mode={'contained'}
-                            onPress={() => doReject()}
+                            onPress={() => doAction()}
                         >
-                            Reject
+                            {actiontype}
                         </Button>
                     </View>
                     <View style={styles.buttonContainer}>
                         <Button
                             mode={'contained'}
-                            onPress={() => setRejectModal(false)}
+                            onPress={() => setActionModal(false)}
                         >
                             Cancel
                         </Button>
@@ -134,7 +123,7 @@ export const NotificationsDetailsView = () => {
                     <View style={styles.buttonContainer}>
                         <Button
                             mode={'contained'}
-                            onPress={() => setAcceptModal(true)}
+                            onPress={() => setAction('Accept')}
                         >
                             Accept
                         </Button>
@@ -142,7 +131,7 @@ export const NotificationsDetailsView = () => {
                     <View style={styles.buttonContainer}>
                         <Button
                             mode={'contained'}
-                            onPress={() => setRejectModal(true)}
+                            onPress={() => setAction('Reject')}
                         >
                             Reject
                         </Button>
