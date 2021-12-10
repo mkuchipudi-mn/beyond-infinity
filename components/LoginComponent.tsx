@@ -5,7 +5,10 @@ import { useForm } from 'react-hook-form';
 import { Button } from 'react-native-paper';
 import { Asset } from 'expo-asset';
 
-const imageURI = Asset.fromModule(require('../assets/images/modeln_header_logo.svg')).uri;
+import images from '../assets';
+
+
+let modelnImage ={ uri: 'https://www.modeln.com/wp-content/themes/jupiter-child/img/logo.png'};
 
 function LoginComponent( {onSubmit} : {onSubmit : any}) {
   const { control, setFocus, formState: { errors }, handleSubmit } = useForm({
@@ -19,7 +22,7 @@ function LoginComponent( {onSubmit} : {onSubmit : any}) {
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-      <Image source={{uri: imageURI}} style={{height: 60, position : 'relative' , left : 90 }} />
+      <Image source={modelnImage} style={{height: 70  }} />
         <FormBuilder
           control={control}
           setFocus={setFocus}
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
   },
   scrollViewStyle: {
     flex: 1,
-    padding: 15,
+    padding: 5,
     justifyContent: 'center',
   },
   headingStyle: {
