@@ -18,21 +18,21 @@ const notifService = new NotifService();
 export default function NotificationsScreen({ navigation }: RootTabScreenProps<'Notifications'>) {
   const { state, dispatch } = React.useContext(Context);
   const [notifications, setNotifications] = React.useState<any>([]);
-  const init = async () => { 
+  const init = async () => {
     const response = await notifService.search();
     setNotifications(mapNotifications(response.data));
   }
 
   React.useEffect(() => {
     init();
-  },[])
+  }, [])
 
-  if(!notifications.length)
+  if (!notifications.length)
     return <ActivityIndicator size="small" color="#0000ff" />
-  
+
   return (
     <View style={styles.container}>
-      <NotificationScreenView notifications={notifications} navigation={navigation}/>
+      <NotificationScreenView notifications={notifications} navigation={navigation} />
     </View>
   );
 }

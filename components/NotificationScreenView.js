@@ -13,6 +13,7 @@ import NotifService from '../services/Notif.service';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { NotificationsDetailsView } from "../screens/NotificationsDetailsView";
 
 const notifService = new NotifService();
 
@@ -232,12 +233,7 @@ const NotificationScreenView = ({ notifications, navigation }) => {
           onRightActionStatusChange={onRightActionStatusChange}
         />
       )}
-      {showDetails && (
-        <View style={styles.detailscontainer}>
-          <Text style={styles.title}>Notification Details</Text>
-          <View style={styles.separator} lightColor='#eee' darkColor='rgba(255,255,255,0.1)' />
-        </View>
-      )}
+      {showDetails && <NotificationsDetailsView/>}
     </View>
   );
 };

@@ -1,0 +1,34 @@
+[
+    {
+        "name": "Claim ID",
+        "field": "ClaimNum"
+    },
+    {
+        "name": "Debit Memo Id",
+        "field": "DebitMemoId"
+    },
+    {
+        "name": "Claim Status",
+        "field": "ClaimStatus"
+    },
+    {
+        "name": "Payee ID",
+        "field": "Payee.MemberName"
+    },
+    {
+        "name": "Requested Amount",
+        "field": "TotalDistrRebateAmount"
+    },
+    {
+        "name": "Approved Amount",
+        "field": "TotalApprRebateAmount"
+    },
+    {
+        "name": "Discrepency Amount",
+        "field": "TotalDiscrepancyAmount"
+    },
+    {
+        "name": "Line Count",
+        "field": "LineCount"
+    }
+]
