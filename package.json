@@ -51,6 +51,7 @@
     "react-native-tableview-simple": "^4.3.0",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
+    "react-navigation": "^4.4.4",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "2.1.8",

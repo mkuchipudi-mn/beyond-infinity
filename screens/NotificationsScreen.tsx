@@ -5,12 +5,12 @@ import { Text, View } from '../components/Themed';
 import { Context } from '../context';
 import { getAllNotifications } from '../redux/actions/notifs.actions';
 import { RootTabScreenProps } from '../types';
-
+import {NavigationActions, StackActions} from 'react-navigation';
 import NotifService from "../services/Notif.service";
 import { SET_ALL_NOTIF } from "../redux/types";
 import NotificationScreenView from '../components/NotificationScreenView';
 import { ActivityIndicator } from 'react-native-paper';
-import { mapNotifications } from '../utils/map';
+import { mapDummyNotifications, mapNotifications } from '../utils/map';
 
 
 const notifService = new NotifService();
@@ -21,11 +21,15 @@ export default function NotificationsScreen({ navigation }: RootTabScreenProps<'
   const init = async () => {
     const response = await notifService.search();
     setNotifications(mapNotifications(response.data));
+    //setNotifications(mapDummyNotifications());
   }
 
   React.useEffect(() => {
-    init();
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {
+      init();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   if (!notifications.length)
     return <ActivityIndicator size="small" color="#0000ff" />

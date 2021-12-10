@@ -8,7 +8,7 @@ import { RootTabScreenProps } from '../types';
 import { mapSearchCard } from '../utils/map';
 
 const searchCardsService = new SearchCardsService();
-export default function SearchCardsScreen({ navigation }: RootTabScreenProps<'SearchCards'>) {
+export default function SearchCardsScreen({ navigation }: RootTabScreenProps<'Cards'>) {
   const [cards, setCards] = React.useState<any>([]);
 
   const init = async () => {
@@ -17,8 +17,12 @@ export default function SearchCardsScreen({ navigation }: RootTabScreenProps<'Se
   };
 
   React.useEffect(() => {
-    init();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      init();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
 
   if (!cards.length) return <ActivityIndicator size='small' color='#0000ff' />;
 

@@ -33,3 +33,15 @@ export const mapNotification = (item: any, index: number) => {
     pk: item['objectIdentifier'].pk,
   };
 };
+
+
+export const mapDummyNotifications = () => {
+  return [{
+    key: 1,
+    title: 'text',
+    details:'text',
+    unread: true,
+    objectIdentifier:12345,
+    pk: 123,
+  }];
+};

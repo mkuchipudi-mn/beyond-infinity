@@ -25,8 +25,8 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {/* <RootDrawer/> */}
-      <RootStackNavigator/>
+      <RootDrawer/>
+      {/* <RootStackNavigator/> */}
     </NavigationContainer>
   );
 }
@@ -99,6 +99,7 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Cards"
       screenOptions={{
+  
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       
@@ -107,6 +108,7 @@ function BottomTabNavigator() {
         component={SearchCardsScreen}
         options={({ navigation }: RootTabScreenProps<'Cards'>) => ({
           title: 'Cards',
+          unmountInactiveRoutes: true,
           tabBarIcon: ({ color }) => <TabBarIcon name="link" color={color} />,
           headerRight: () => (
             <Pressable
