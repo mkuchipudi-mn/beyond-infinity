@@ -3,7 +3,7 @@ import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
 
 const SearchCard = ({title , content} : {title:string , content: string}) => (
-  <Card>
+  <Card style={styles.container}>
      <Card.Content>
       <Title>{ title }</Title>
       <Paragraph>{content}</Paragraph>
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#ecf0f1',
   },
   paragraph: {
     fontSize: 18,

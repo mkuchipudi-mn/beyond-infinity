@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
-
+import { ListItem } from 'react-native-elements';
 import SearchCard from '../components/SearchCard';
 import SearchCardsService from '../services/SearchCards.service';
 import { RootTabScreenProps } from '../types';
@@ -9,25 +9,26 @@ import { mapSearchCard } from '../utils/map';
 
 const searchCardsService = new SearchCardsService();
 export default function SearchCardsScreen({ navigation }: RootTabScreenProps<'SearchCards'>) {
-  
   const [cards, setCards] = React.useState<any>([]);
-  
-  const init = async () => { 
+
+  const init = async () => {
     const response = await searchCardsService.getSearchCards();
     setCards(mapSearchCard(response.data));
-  }
-  
+  };
+
   React.useEffect(() => {
     init();
-  },[])
-  
+  }, []);
 
-  if(!cards.length)
-    return <ActivityIndicator size="small" color="#0000ff" />
-  
+  if (!cards.length) return <ActivityIndicator size='small' color='#0000ff' />;
+
   return (
     <ScrollView>
-      { cards.map((card: any) => <SearchCard {...card}></SearchCard>)}
+      {cards.map((card: any) => (
+        <ListItem>
+          <SearchCard {...card}></SearchCard>
+        </ListItem>
+      ))}
     </ScrollView>
   );
 }

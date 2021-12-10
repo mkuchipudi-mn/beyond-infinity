@@ -16,16 +16,17 @@ import { Context } from '../context';
 import { logoutAction } from '../redux/actions/login.action';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import SearchCardsScreen from '../screens/SearchCardsScreen';
-import ApprovalsScreen from '../screens/Approvals/ApprovalsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {/* <RootNavigator /> */}
-      <RootDrawer/>
+      {/* <RootDrawer/> */}
+      <RootStackNavigator/>
     </NavigationContainer>
   );
 }
@@ -56,12 +57,21 @@ function RootDrawer() {
   return (
     <Drawer.Navigator drawerContent={(props : any) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-      <Drawer.Screen name="SearchCards" component={SearchCardsScreen} />
-      <Drawer.Screen name="Approvals" component={ApprovalsScreen} />
+      <Drawer.Screen name="Cards" component={SearchCardsScreen} />
     </Drawer.Navigator>
   );
 }
 
+
+function RootStackNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Notifications" component={NotificationsScreen} />
+      <Stack.Screen name="Cards" component={SearchCardsScreen} />
+    </Stack.Navigator>
+  );
+}
 
 
 /**
@@ -78,4 +88,50 @@ function TabBarIcon(props: {
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+}
+
+
+
+function BottomTabNavigator() {
+  const colorScheme = useColorScheme();
+  const { dispatch } = React.useContext(Context);
+  return (
+    <BottomTab.Navigator
+      initialRouteName="Cards"
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+      }}>
+      
+      <BottomTab.Screen
+        name="Cards"
+        component={SearchCardsScreen}
+        options={({ navigation }: RootTabScreenProps<'Cards'>) => ({
+          title: 'Cards',
+          tabBarIcon: ({ color }) => <TabBarIcon name="link" color={color} />,
+          headerRight: () => (
+            <Pressable
+              onPress={() => dispatch(logoutAction())}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <FontAwesome
+                name="close"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          title: 'Notifications',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+    </BottomTab.Navigator>
+  );
 }
