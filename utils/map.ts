@@ -49,12 +49,18 @@ export const mapDummyNotifications = () => {
 };
 
 export const mapClaimDetails = (response: any) => {
-  return response.attributes
-    .filter((attribute: any) => attribute.type === 'STRING')
-    .map((attribute: any) => {
-      return {
-        label: attribute.name,
-        value: attribute.value,
-      };
-    });
+  const displayfields = require('../config/resources/Notifications/DetailsPage/index.json')
+  const attributes = response.attributes.map((attribute: any) => {
+    return {
+      label: attribute.name,
+      value: attribute.type == 'MONEY' ? attribute.value.money : (attribute.type == 'ENUM' ? attribute.value.displayName : attribute.value),
+    };
+  });
+  return displayfields.map((item: any) => {
+    return {
+      label: item.name,
+      value: attributes.find(obj => obj.label === item.field).value,
+    };
+  })
+
 };
