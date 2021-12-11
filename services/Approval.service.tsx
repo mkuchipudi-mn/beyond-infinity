@@ -4,10 +4,10 @@ export default class ApprovalsService {
 
   constructor() {}
 
-  public async approve(pk: string, message: string)  {
-    return fetch(BASE_SERVICE_URL + `/rest/data/Claim/${pk}/approve`, {
+  public async approve(pk: string, comment: string)  {
+    return fetch(BASE_SERVICE_URL + `/rest/approval/${pk}`, {
       method: 'post',
-      body: JSON.stringify({message}),
+      body: JSON.stringify({comment,"apprStatus": "Approve"}),
       headers: { 'Content-Type': 'application/json' },
     }).then((response: any) => {
       return response.json();
@@ -15,10 +15,10 @@ export default class ApprovalsService {
   }
 
 
-  public async reject(pk: string, message: string) {
-    return fetch(BASE_SERVICE_URL + `/rest/data/Claim/${pk}/reject`, {
+  public async reject(pk: string, comment: string) {
+    return fetch(BASE_SERVICE_URL + `/rest/approval/${pk}`, {
       method: 'post',
-      body: JSON.stringify({message}),
+      body: JSON.stringify({comment, "apprStatus": "Reject"}),
       headers: { 'Content-Type': 'application/json' },
     }).then((response: any) => {
       return response.json();
