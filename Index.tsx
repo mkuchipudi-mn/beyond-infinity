@@ -9,7 +9,6 @@ import LoginService from './services/Login.service';
 import LoginScreen from './screens/LoginScreen';
 import { Context } from './context';
 import { loginAction, logoutAction } from './redux/actions/login.action';
-import { useToast } from 'react-native-styled-toast';
 import { showMessage, hideMessage } from "react-native-flash-message";
 
 const loginService = new LoginService();

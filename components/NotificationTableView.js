@@ -39,14 +39,7 @@ const generateNotifLinkView = (notif, key) => {
           accessory="DisclosureIndicator"
           onPress={() => console.log("Heyho!")}
           titleTextColor="#007AFF"
-          // image={
-          //   <Image
-          //     style={{ borderRadius: 5 }}
-          //     source={{
-          //       uri: "https://reactjs.org/favicon.ico",
-          //     }}
-          //   />
-          // }
+
         />
       </React.Fragment>
     );

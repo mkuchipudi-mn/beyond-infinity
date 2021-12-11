@@ -6,7 +6,7 @@ export default class NotifService {
   public async search() {
 
     const body = { "moduleName": "admin", "orgFilter": { "onlyOrgSearch": false, "orgList": [], "directOrgAssociation": true }, "startRowIndex": 1, "searchName": "NotifMsgPopover", "selectList": ["Pk", "MgrId", "VerNumber", "Resource.Description", "ImmediateNotif", "dateCreated", "Priority", "NotifInfo", "Unread", "Custom"], "sortTermList": [{ "descending": true, "fullName": "Pk" }], "resultLimit": 11, "searchTermList": [{ "attribute": { "name": "VirtualMgrId", "value": [11100, 10547, 11702, 10739, 10706, 10732, 11708, 50462] }, "operator": "in" }, { "attribute": { "name": "NotifInfo", "value": "null" }, "operator": "isNotNull" }] };
-    const resposeData = await fetch(BASE_SERVICE_URL + '/rest/NotifMsg/search', {
+    const resposeData = await fetch(BASE_SERVICE_URL + '/rest/data/NotifMsg/search', {
       method: 'post',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' },

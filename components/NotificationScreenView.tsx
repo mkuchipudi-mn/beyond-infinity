@@ -8,28 +8,20 @@ import {
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
-
-import NotifService from '../services/Notif.service';
-
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NotificationsDetailsView } from "../screens/NotificationsDetailsView";
 
-const notifService = new NotifService();
-
-const NotificationScreenView = ({ notifications, navigation }) => {
+const NotificationScreenView = ({
+  notifications,
+  navigation,
+  onClickNotification,
+}: {
+  notifications: any;
+  navigation: any;
+  onClickNotification: any;
+}) => {
   const [listData, setListData] = useState(notifications);
-
-  const [showDetails, setShowDetails] = useState(false);
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setShowDetails(false);
-    });
-    return unsubscribe;
-  }, [navigation]);
-
-  const closeRow = (rowMap, rowKey) => {
+  const closeRow = (rowMap: any, rowKey: any) => {
     if (rowMap[rowKey]) {
       rowMap[rowKey].closeRow();
     }
@@ -62,14 +54,6 @@ const NotificationScreenView = ({ notifications, navigation }) => {
     console.log('onLeftAction', rowKey);
   };
 
-  const showNotifDetailView = (data, rowKey) => {
-    console.log(data);
-    if (data.item.unread) {
-      notifService.unReadFlagUpdate(data.item.objectIdentifier, data.item.pk).then((data) => {});
-    }
-    setShowDetails(!showDetails);
-  };
-
   const VisibleItem = (props) => {
     const { data, rowHeightAnimatedValue, removeRow, leftActionState, rightActionState } = props;
 
@@ -87,7 +71,7 @@ const NotificationScreenView = ({ notifications, navigation }) => {
       <Animated.View style={[styles.rowFront, { height: rowHeightAnimatedValue }]}>
         <TouchableHighlight
           style={styles.rowFrontVisible}
-          onPress={() => showNotifDetailView(data, data.item.key)}
+          onPress={() => onClickNotification(data, data.item.key)}
           underlayColor={'#aaa'}
         >
           <View>
@@ -201,7 +185,7 @@ const NotificationScreenView = ({ notifications, navigation }) => {
     );
   };
 
-  const renderHiddenItem = (data, rowMap) => {
+  const renderHiddenItem = (data : any, rowMap : any) => {
     const rowActionAnimatedValue = new Animated.Value(75);
     const rowHeightAnimatedValue = new Animated.Value(60);
 
@@ -220,27 +204,23 @@ const NotificationScreenView = ({ notifications, navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle='dark-content' />
-      {/* <StatusBar backgroundColor="#FF6347" barStyle="light-content"/> */}
-      {!showDetails && (
-        <SwipeListView
-          data={listData}
-          renderItem={renderItem}
-          renderHiddenItem={renderHiddenItem}
-          leftOpenValue={75}
-          rightOpenValue={-150}
-          disableRightSwipe
-          onRowDidOpen={onRowDidOpen}
-          leftActivationValue={100}
-          rightActivationValue={-200}
-          leftActionValue={0}
-          rightActionValue={-500}
-          onLeftAction={onLeftAction}
-          onRightAction={onRightAction}
-          onLeftActionStatusChange={onLeftActionStatusChange}
-          onRightActionStatusChange={onRightActionStatusChange}
-        />
-      )}
-      {showDetails && <NotificationsDetailsView/>}
+      <SwipeListView
+        data={listData}
+        renderItem={renderItem}
+        renderHiddenItem={renderHiddenItem}
+        leftOpenValue={75}
+        rightOpenValue={-150}
+        disableRightSwipe
+        onRowDidOpen={onRowDidOpen}
+        leftActivationValue={100}
+        rightActivationValue={-200}
+        leftActionValue={0}
+        rightActionValue={-500}
+        onLeftAction={onLeftAction}
+        onRightAction={onRightAction}
+        onLeftActionStatusChange={onLeftActionStatusChange}
+        onRightActionStatusChange={onRightActionStatusChange}
+      />
     </View>
   );
 };

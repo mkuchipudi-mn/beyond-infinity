@@ -20,17 +20,6 @@ export const mapNotifications = (data: any) => {
       result.push(mapNotification(childResult, index));
     }
   });
-  if (result.length === 0) {
-    return [{
-      key: 1,
-      title: 'pavan ,  u got a notif dude',
-      details: 1024567,
-      unread: false,
-      objectIdentifier: 1,
-      pk: 1,
-    }
-    ]
-  }
   return result;
 };
 
@@ -42,17 +31,30 @@ export const mapNotification = (item: any, index: number) => {
     unread: item['Unread'],
     objectIdentifier: item['objectIdentifier'].uniqueObjIdString,
     pk: item['objectIdentifier'].pk,
+    claimPk: JSON.parse(item['NotifInfo']).objectIdentifier.pk,
   };
 };
 
-
 export const mapDummyNotifications = () => {
-  return [{
-    key: 1,
-    title: 'text',
-    details:'text',
-    unread: true,
-    objectIdentifier:12345,
-    pk: 123,
-  }];
+  return [
+    {
+      key: 1,
+      title: 'text',
+      details: 'text',
+      unread: true,
+      objectIdentifier: 12345,
+      pk: 123,
+    },
+  ];
+};
+
+export const mapClaimDetails = (response: any) => {
+  return response.attributes
+    .filter((attribute: any) => attribute.type === 'STRING')
+    .map((attribute: any) => {
+      return {
+        label: attribute.name,
+        value: attribute.value,
+      };
+    });
 };
