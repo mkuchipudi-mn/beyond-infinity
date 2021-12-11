@@ -18,6 +18,8 @@ export const NotificationsDetailsView = ({
 }) => {
   const [approveConfirm, setApproveConfirm] = useState(false);
   const [rejectConfirm, setRejectConfirm] = useState(false);
+  const claimStatus = claimDetails.find((item: any) => item.label === 'Claim Status');
+  const disableActions = claimStatus.value !== 'Pending Approval';
 
   const onClickApproveAction = (text: string) => {
     setApproveConfirm(false);
@@ -83,12 +85,12 @@ export const NotificationsDetailsView = ({
         </Card>
         <View style={styles.buttonGroup}>
           <View style={styles.buttonContainer}>
-            <Button mode={'contained'} onPress={() => setApproveConfirm(true)}>
+            <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
               Accept
             </Button>
           </View>
           <View style={styles.buttonContainer}>
-            <Button mode={'contained'} onPress={() => setRejectConfirm(true)}>
+            <Button disabled={disableActions} mode={'contained'} onPress={() => setRejectConfirm(true)}>
               Reject
             </Button>
           </View>
