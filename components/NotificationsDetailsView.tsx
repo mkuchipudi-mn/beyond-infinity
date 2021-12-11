@@ -48,8 +48,7 @@ export const NotificationsDetailsView = ({
       <DialogInput
         isDialogVisible={approveConfirm}
         title={'Approve Reason'}
-        message={'Message for DialogInput #1'}
-        hintInput={'HINT INPUT'}
+        hintInput={'Enter Comment'}
         submitInput={(inputText: string) => {
           onClickApproveAction(inputText);
         }}
@@ -61,8 +60,7 @@ export const NotificationsDetailsView = ({
       <DialogInput
         isDialogVisible={rejectConfirm}
         title={'Reject Reason'}
-        message={'Message for DialogInput #1'}
-        hintInput={'HINT INPUT'}
+        hintInput={'Enter Comment'}
         submitInput={(inputText: string) => {
           onClickRejectAction(inputText);
         }}

@@ -3,14 +3,12 @@ import { View, StyleSheet, ScrollView, Text, Image } from 'react-native';
 import { FormBuilder } from 'react-native-paper-form-builder';
 import { useForm } from 'react-hook-form';
 import { Button } from 'react-native-paper';
-import { Asset } from 'expo-asset';
-
-import images from '../assets';
 
 
-let modelnImage ={ uri: 'https://www.modeln.com/wp-content/themes/jupiter-child/img/logo.png'};
 
-function LoginComponent( {onSubmit} : {onSubmit : any}) {
+let modelnImage = { uri: 'https://ok1static.oktacdn.com/fs/bco/1/fs019n6wf7jslgCcv0h8' };
+
+function LoginComponent({ onSubmit }: { onSubmit: any }) {
   const { control, setFocus, formState: { errors }, handleSubmit } = useForm({
     defaultValues: {
       username: 'Administrator',
@@ -22,7 +20,7 @@ function LoginComponent( {onSubmit} : {onSubmit : any}) {
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-      <Image source={modelnImage} style={{height: 70  }} />
+        <Image source={modelnImage} style={{ height: 70 }} />
         <FormBuilder
           control={control}
           setFocus={setFocus}
