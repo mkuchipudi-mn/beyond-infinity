@@ -30,7 +30,7 @@ export default class NotifService {
     };
 
 
-    const resposeData = await fetch(BASE_SERVICE_URL + '/rest/NotifMsg', {
+    const resposeData = await fetch(BASE_SERVICE_URL + '/rest/data/NotifMsg', {
       method: 'put',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' },
