@@ -18,6 +18,7 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 import SearchCardsScreen from '../screens/SearchCardsScreen';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import { Icon } from 'react-native-elements';
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -25,7 +26,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootDrawer/>
+      <RootDrawer />
       {/* <RootStackNavigator/> */}
     </NavigationContainer>
   );
@@ -39,13 +40,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator();
 
 
-function CustomDrawerContent(props : any) {
+function CustomDrawerContent(props: any) {
   const { dispatch } = React.useContext(Context);
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <DrawerItem label={() => <Text style={{ color: 'white' }}>Logout</Text>}
-        style={{backgroundColor: 'black'}} 
+        style={{ backgroundColor: 'black' }}
         onPress={() => dispatch(logoutAction())}
       />
     </DrawerContentScrollView>
@@ -53,11 +54,24 @@ function CustomDrawerContent(props : any) {
 }
 
 function RootDrawer() {
-  
+
   return (
-    <Drawer.Navigator drawerContent={(props : any) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-      <Drawer.Screen name="Cards" component={SearchCardsScreen} />
+    <Drawer.Navigator drawerContent={(props: any) => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="Notifications" component={NotificationsScreen}
+        options={{
+          drawerIcon: config => <FontAwesome
+            name='bell'
+            size={23}
+          ></FontAwesome>
+        }} />
+      <Drawer.Screen name="Cards" component={SearchCardsScreen}
+        options={{
+          drawerIcon: config => <FontAwesome
+            name='vcard-o'
+            size={23}
+          ></FontAwesome>
+        }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -99,10 +113,10 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Cards"
       screenOptions={{
-  
+
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
-      
+
       <BottomTab.Screen
         name="Cards"
         component={SearchCardsScreen}
