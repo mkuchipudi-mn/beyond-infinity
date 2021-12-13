@@ -26,7 +26,7 @@ export const mapNotifications = (data: any) => {
 export const mapNotification = (item: any, index: number) => {
   return {
     key: `${index}`,
-    title: item['Resource.Description'] + ' for ' + item['objectIdentifier'].uniqueObjIdString,
+    title: item['Resource.Description'] + ' for ' + JSON.parse(item['NotifInfo']).idAttrPath,
     details: item['dateCreated'].date,
     unread: item['Unread'],
     objectIdentifier: item['objectIdentifier'].uniqueObjIdString,
@@ -53,7 +53,7 @@ export const mapClaimDetails = (response: any) => {
   const attributes = response.attributes.map((attribute: any) => {
     return {
       label: attribute.name,
-      value: attribute.type == 'MONEY' ? attribute.value.money : (attribute.type == 'ENUM' ? attribute.value.displayName : attribute.value),
+      value: attribute.type == 'MONEY' ? (attribute.value.money < 0 ? `(${-1 * attribute.value.money})` : attribute.value.money) : (attribute.type == 'ENUM' ? attribute.value.displayName : attribute.value),
     };
   });
   return displayfields.map((item: any) => {

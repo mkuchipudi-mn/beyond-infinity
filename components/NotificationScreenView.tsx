@@ -133,19 +133,6 @@ const NotificationScreenView = ({
       <Animated.View style={[styles.rowBack, { height: rowHeightAnimatedValue }]}>
         <Text>Left</Text>
         {!leftActionActivated && (
-          <TouchableOpacity
-            style={[styles.backRightBtn, styles.backRightBtnLeft]}
-            onPress={onClose}
-          >
-            <MaterialCommunityIcons
-              name='close-circle-outline'
-              size={25}
-              style={styles.trash}
-              color='#fff'
-            />
-          </TouchableOpacity>
-        )}
-        {!leftActionActivated && (
           <Animated.View
             style={[
               styles.backRightBtn,
@@ -185,7 +172,7 @@ const NotificationScreenView = ({
     );
   };
 
-  const renderHiddenItem = (data : any, rowMap : any) => {
+  const renderHiddenItem = (data: any, rowMap: any) => {
     const rowActionAnimatedValue = new Animated.Value(75);
     const rowHeightAnimatedValue = new Animated.Value(60);
 

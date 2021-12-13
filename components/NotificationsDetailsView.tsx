@@ -47,7 +47,7 @@ export const NotificationsDetailsView = ({
 
       <DialogInput
         isDialogVisible={approveConfirm}
-        title={'Approve Reason'}
+        title={'Approval Comment'}
         hintInput={'Enter Comment'}
         submitInput={(inputText: string) => {
           onClickApproveAction(inputText);
@@ -59,7 +59,7 @@ export const NotificationsDetailsView = ({
 
       <DialogInput
         isDialogVisible={rejectConfirm}
-        title={'Reject Reason'}
+        title={'Reject Comment'}
         hintInput={'Enter Comment'}
         submitInput={(inputText: string) => {
           onClickRejectAction(inputText);
@@ -84,7 +84,7 @@ export const NotificationsDetailsView = ({
         <View style={styles.buttonGroup}>
           <View style={styles.buttonContainer}>
             <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
-              Accept
+              Approve
             </Button>
           </View>
           <View style={styles.buttonContainer}>
@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   itemFirst: {
-    width: 150,
+    paddingLeft: 20,
+    width: 200,
   },
   itemSecond: {
     width: 300,
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 0,
     width: 200,
+    paddingLeft: 20,
   },
   backTextWhite: {
     color: '#FFF',
