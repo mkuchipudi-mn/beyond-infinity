@@ -58,12 +58,12 @@ function RootDrawer() {
   return (
     <Drawer.Navigator drawerContent={(props: any) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Notifications" component={NotificationsScreen}
-        options={{
+        options={({ navigation, route }) => ({
           drawerIcon: config => <FontAwesome
             name='bell'
             size={23}
-          ></FontAwesome>
-        }} />
+          ></FontAwesome>,
+        })} />
       <Drawer.Screen name="Cards" component={SearchCardsScreen}
         options={{
           drawerIcon: config => <FontAwesome

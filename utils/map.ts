@@ -5,6 +5,7 @@ export const mapSearchCard = (response: any) => {
     return {
       title: result.name,
       content: result.amount,
+      lines: result.lines,
     };
   });
 };
@@ -53,7 +54,7 @@ export const mapClaimDetails = (response: any) => {
   const attributes = response.attributes.map((attribute: any) => {
     return {
       label: attribute.name,
-      value: attribute.type == 'MONEY' ? (attribute.value.money < 0 ? `(${-1 * attribute.value.money})` : attribute.value.money) : (attribute.type == 'ENUM' ? attribute.value.displayName : attribute.value),
+      value: attribute.type == 'MONEY' ? '$' + (attribute.value.money < 0 ? `(${-1 * attribute.value.money})` : attribute.value.money) : (attribute.type == 'ENUM' ? attribute.value.displayName : attribute.value),
     };
   });
   return displayfields.map((item: any) => {

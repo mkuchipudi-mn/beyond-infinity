@@ -21,6 +21,10 @@ const NotificationScreenView = ({
   onClickNotification: any;
 }) => {
   const [listData, setListData] = useState(notifications);
+
+  React.useEffect(() => {
+    setListData(notifications);
+  }, [notifications]);
   const closeRow = (rowMap: any, rowKey: any) => {
     if (rowMap[rowKey]) {
       rowMap[rowKey].closeRow();

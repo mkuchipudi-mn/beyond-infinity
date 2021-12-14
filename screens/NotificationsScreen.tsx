@@ -11,6 +11,7 @@ import NotificationScreenView from '../components/NotificationScreenView';
 import { ActivityIndicator } from 'react-native-paper';
 import { mapClaimDetails, mapNotifications } from '../utils/map';
 import { NotificationsDetailsView } from '../components/NotificationsDetailsView';
+import { FontAwesome } from '@expo/vector-icons';
 
 const notifService = new NotifService();
 const detailInfoService = new DetailInfoService();
@@ -18,15 +19,27 @@ const approvalsService = new ApprovalsService();
 
 
 export default function NotificationsScreen({ navigation }: RootTabScreenProps<'Notifications'>) {
-  const { state, dispatch } = React.useContext(Context);
-  const [notifications, setNotifications] = React.useState<any>([]);
+  //const { state, dispatch } = React.useContext(Context);
+  const [notifications, setNotifications] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [claimDetails, setClaimDetails] = useState<any>([]);
   const [claimId, setClaimId] = useState<any>(null);
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: ({ }) => <FontAwesome
+        name='refresh'
+        size={23}
+        style={styles.refresh}
+        onPress={async () => await init()}
+      ></FontAwesome>,
+    });
+  }, [navigation]);
+
   const init = async () => {
     const response = await notifService.search();
-    setNotifications(mapNotifications(response.data));
+    //setNotifications(mapNotifications(response.data));
+    setNotifications(JSON.parse(JSON.stringify(mapNotifications(response.data))));
   };
 
   const onClickNotification = async (data: any) => {
@@ -53,8 +66,8 @@ export default function NotificationsScreen({ navigation }: RootTabScreenProps<'
   };
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      init();
+    const unsubscribe = navigation.addListener('focus', async () => {
+      await init();
       setShowDetails(false);
     });
     return unsubscribe;
@@ -86,6 +99,9 @@ export default function NotificationsScreen({ navigation }: RootTabScreenProps<'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  refresh: {
+    paddingRight: 20,
   },
   title: {
     fontSize: 20,

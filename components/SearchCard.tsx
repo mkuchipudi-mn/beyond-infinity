@@ -2,10 +2,12 @@ import * as React from 'react';
 import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
 import { StyleSheet, Text } from 'react-native';
 
-const SearchCard = ({ title, content }: { title: string; content: string }) => (
+const SearchCard = ({ title, content, lines }: { title: string; content: string, lines: string }) => (
   <Card mode='outlined' style={styles.container}>
     <Text style={styles.paragraph}>{title}</Text>
-    <Paragraph style={styles.content}>{content}$</Paragraph>
+    <Paragraph style={styles.content}>Req.Chargeback Amount: ${content}</Paragraph>
+    <Paragraph style={styles.content}>Lines: {lines}</Paragraph>
+
   </Card>
 );
 
