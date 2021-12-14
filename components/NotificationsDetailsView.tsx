@@ -47,7 +47,7 @@ export const NotificationsDetailsView = ({
 
       <DialogInput
         isDialogVisible={approveConfirm}
-        title={'Approval Comment'}
+        title={'Approval Reason'}
         hintInput={'Enter Comment'}
         submitInput={(inputText: string) => {
           onClickApproveAction(inputText);
@@ -59,7 +59,7 @@ export const NotificationsDetailsView = ({
 
       <DialogInput
         isDialogVisible={rejectConfirm}
-        title={'Reject Comment'}
+        title={'Reject Reason'}
         hintInput={'Enter Comment'}
         submitInput={(inputText: string) => {
           onClickRejectAction(inputText);
@@ -80,11 +80,10 @@ export const NotificationsDetailsView = ({
               </View>
             )}
           />
-        </Card>
-        <View style={styles.buttonGroup}>
+          <View style={styles.buttonGroup}>
           <View style={styles.buttonContainer}>
             <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
-              Approve
+              Accept
             </Button>
           </View>
           <View style={styles.buttonContainer}>
@@ -93,6 +92,7 @@ export const NotificationsDetailsView = ({
             </Button>
           </View>
         </View>
+        </Card>
       </ScrollView>
     </View>
   );
@@ -109,8 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   itemFirst: {
-    paddingLeft: 20,
-    width: 200,
+    width: 150,
   },
   itemSecond: {
     width: 300,
@@ -122,7 +121,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 0,
     width: 200,
-    paddingLeft: 20,
   },
   backTextWhite: {
     color: '#FFF',

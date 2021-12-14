@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "beyond-infinty",
-    "slug": "beyond-infinty",
+    "name": "MN-Wise",
+    "slug": "MN-Wise",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -19,13 +19,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.modeln.beyondinfinty"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.modeln.beyondinfinty"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
