@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   refresh: {
     paddingRight: 20,
-    color: 'blue',
+    color: 'white',
   },
   title: {
     fontSize: 20,
