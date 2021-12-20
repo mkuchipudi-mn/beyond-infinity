@@ -42,7 +42,28 @@ export default class NotifService {
     return resposeData;
   }
 
+  public async deleteNotification(uniqueObjIdString?: any, pk?: any) {
 
+    var body = {
+      "moduleName": "admin", "appCommand": {
+        "actionCommandName": "performAction",
+        "appCommandParams": [{ "name": "PObjModelString", "value": "NotifMsg" }, { "name": "ActionType", "value": "DELETE" }]
+      },
+      "objectIdentifiers": [{ "objectType": "NotifMsg", "mgrId": 50461, "verNum": 0, "dateUpdated": null, "uniqueObjIdString": uniqueObjIdString, "pk": pk }]
+    };
+
+
+    const resposeData = await fetch(BASE_SERVICE_URL + '/rest/data/NotifMsg', {
+      method: 'put',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+    }).then((response: any) => {
+      console.log(response.headers);
+      return response.json();
+    });
+
+    return resposeData;
+  }
 
   public async getCLaimDetails(pk?: any) {
 

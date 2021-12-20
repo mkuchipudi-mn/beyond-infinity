@@ -10,6 +10,9 @@ import {
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import NotifService from '../services/Notif.service';
+
+const notifService = new NotifService();
 
 const NotificationScreenView = ({
   notifications,
@@ -31,10 +34,12 @@ const NotificationScreenView = ({
     }
   };
 
-  const deleteRow = (rowMap, rowKey) => {
+  const deleteRow = async (rowMap, rowKey) => {
     closeRow(rowMap, rowKey);
     const newData = [...listData];
     const prevIndex = listData.findIndex((item) => item.key === rowKey);
+    const deletedObj = listData.find((item) => item.key === rowKey);
+    await notifService.deleteNotification(deletedObj.objectIdentifier, deletedObj.pk);
     newData.splice(prevIndex, 1);
     setListData(newData);
   };
