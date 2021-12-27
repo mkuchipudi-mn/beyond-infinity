@@ -1,7 +1,7 @@
 import { BASE_SERVICE_URL } from '../config';
 
 export default class DetailInfoService {
-  constructor() {}
+  constructor() { }
 
   public async fetchDetails(pk: string) {
     const body = {
@@ -108,5 +108,5 @@ export default class DetailInfoService {
     });
   }
 
-  public async logout() {}
+  public async logout() { }
 }

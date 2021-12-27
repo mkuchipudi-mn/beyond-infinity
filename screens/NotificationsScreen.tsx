@@ -90,6 +90,7 @@ export default function NotificationsScreen({ navigation }: RootTabScreenProps<'
           onBackClick={onBackClick}
           onClickApprove={onAprovalClick}
           onClickReject={onRejectClick}
+          headerTitle={'Claim Details'}
         />
       )}
     </View>

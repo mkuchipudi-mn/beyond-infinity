@@ -1,0 +1,40 @@
+{
+    "strategy": {
+        "object": "CFStrategy",
+        "body": {
+            "moduleName": "strgybldr:OBJECT",
+            "orgFilter": {
+                "onlyOrgSearch": false,
+                "orgList": [],
+                "directOrgAssociation": true
+            },
+            "startRowIndex": 1,
+            "searchName": "CFStrategyObject",
+            "selectList": [
+                "Pk",
+                "MgrId",
+                "VerNumber",
+                "CalcObjId",
+                "Name",
+                "CalcObjStatus",
+                "Type",
+                "ModuleType",
+                "OrgUnit.DisplayName",
+                "Tag3",
+                "DateUpdated",
+                "Description"
+            ],
+            "sortTermList": [],
+            "resultLimit": 11,
+            "searchTermList": [
+                {
+                    "operator": "startsWith",
+                    "attribute": {
+                        "name": "Name",
+                        "value": "VALUE_PLACEHOLDER"
+                    }
+                }
+            ]
+        }
+    }
+}

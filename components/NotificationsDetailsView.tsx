@@ -1,3 +1,4 @@
+import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 
 import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
@@ -10,16 +11,28 @@ export const NotificationsDetailsView = ({
   onBackClick,
   onClickApprove,
   onClickReject,
+  hideButtons,
+  headerTitle,
+  hasPrev,
+  hasNext,
+  onPrevClick,
+  onNextClick,
 }: {
   claimDetails: any;
   onBackClick: any;
   onClickApprove: any;
   onClickReject: any;
+  hideButtons: boolean,
+  headerTitle: any,
+  hasPrev: any,
+  hasNext: any,
+  onPrevClick: any,
+  onNextClick: any,
 }) => {
   const [approveConfirm, setApproveConfirm] = useState(false);
   const [rejectConfirm, setRejectConfirm] = useState(false);
   const claimStatus = claimDetails.find((item: any) => item.label === 'Claim Status');
-  const disableActions = claimStatus.value !== 'Pending Approval';
+  const disableActions = claimStatus && claimStatus.value !== 'Pending Approval';
 
   const onClickApproveAction = (text: string) => {
     setApproveConfirm(false);
@@ -70,7 +83,20 @@ export const NotificationsDetailsView = ({
       ></DialogInput>
       <ScrollView>
         <Card>
-          <Text style={styles.headingStyle}>Claim Details</Text>
+          <View style={styles.itemhead}>
+            {hasPrev && <FontAwesome
+              name='chevron-left'
+              size={23}
+              onPress={() => onPrevClick()}
+            ></FontAwesome>}
+
+            <Text style={styles.headingStyle}>{headerTitle}</Text>
+            {hasNext && <FontAwesome
+              name='chevron-right'
+              size={23}
+              onPress={() => onNextClick()}
+            ></FontAwesome>}
+          </View>
           <FlatList
             data={claimDetails}
             renderItem={({ item }) => (
@@ -80,18 +106,19 @@ export const NotificationsDetailsView = ({
               </View>
             )}
           />
-          <View style={styles.buttonGroup}>
-          <View style={styles.buttonContainer}>
-            <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
-              Accept
-            </Button>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button disabled={disableActions} mode={'contained'} onPress={() => setRejectConfirm(true)}>
-              Reject
-            </Button>
-          </View>
-        </View>
+          {!hideButtons && <View style={styles.buttonGroup}>
+            <View style={styles.buttonContainer}>
+              <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
+                Accept
+              </Button>
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button disabled={disableActions} mode={'contained'} onPress={() => setRejectConfirm(true)}>
+                Reject
+              </Button>
+            </View>
+          </View>}
+
         </Card>
       </ScrollView>
     </View>
@@ -116,7 +143,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headingStyle: {
-    textAlign: 'left',
+    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 18,
     marginTop: 0,

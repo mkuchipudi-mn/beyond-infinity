@@ -65,3 +65,20 @@ export const mapClaimDetails = (response: any) => {
   })
 
 };
+
+
+export const mapSearchDetails = (response: any, meta: any, index: number) => {
+  const attributes = response.data[index].map((attribute: any) => {
+    return {
+      label: attribute.name,
+      value: attribute.type == 'MONEY' ? '$' + (attribute.value.money < 0 ? `(${-1 * attribute.value.money})` : attribute.value.money) : (attribute.type == 'ENUM' ? attribute.value.displayName : attribute.value),
+    };
+  });
+  return meta.map((item: any) => {
+    return {
+      label: item.name,
+      value: attributes.find(obj => obj.label === item.field).value,
+    };
+  })
+
+};

@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Strategy ID",
+        "field": "CalcObjId"
+    },
+    {
+        "name": "Strategy Name",
+        "field": "Name"
+    },
+    {
+        "name": "Status",
+        "field": "CalcObjStatus"
+    },
+    {
+        "name": "Type",
+        "field": "Type"
+    },
+    {
+        "name": "Module Type",
+        "field": "ModuleType"
+    },
+    {
+        "name": "Organization",
+        "field": "OrgUnit.DisplayName"
+    },
+    {
+        "name": "Description",
+        "field": "Description"
+    }
+]
