@@ -9,6 +9,4 @@ export default class BootstrapService {
     const body = { username, password };
     return axios.post(base_url, body);
   }
-
-  public async logout() {}
 }
