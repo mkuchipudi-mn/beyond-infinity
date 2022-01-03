@@ -25,14 +25,14 @@ export const NotificationsDetailsView = ({
   onBackClick: any;
   onClickApprove: any;
   onClickReject: any;
-  hideButtons: boolean,
-  headerTitle: any,
-  hasPrev: any,
-  hasNext: any,
-  onPrevClick: any,
-  onNextClick: any,
-  index: number,
-  count: number,
+  hideButtons: boolean;
+  headerTitle: any;
+  hasPrev: any;
+  hasNext: any;
+  onPrevClick: any;
+  onNextClick: any;
+  index: number;
+  count: number;
 }) => {
   const [approveConfirm, setApproveConfirm] = useState(false);
   const [rejectConfirm, setRejectConfirm] = useState(false);
@@ -72,7 +72,7 @@ export const NotificationsDetailsView = ({
         console.log('Undeteceted action');
       }
     }
-  }
+  };
 
   const onClickApproveAction = (text: string) => {
     setApproveConfirm(false);
@@ -123,8 +123,7 @@ export const NotificationsDetailsView = ({
       ></DialogInput>
       <ScrollView>
         <Card>
-          <SwipeGesture
-            onSwipePerformed={onSwipePerformed}>
+          <SwipeGesture onSwipePerformed={onSwipePerformed}>
             <Text style={styles.headingStyle}> {headerTitle}</Text>
             <FlatList
               data={claimDetails}
@@ -135,23 +134,37 @@ export const NotificationsDetailsView = ({
                 </View>
               )}
             />
-            {!hideButtons && <View style={styles.buttonGroup}>
-              <View style={styles.buttonContainer}>
-                <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
-                  Approve
-                </Button>
+            {!hideButtons && (
+              <View style={styles.buttonGroup}>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    disabled={disableActions}
+                    mode={'contained'}
+                    onPress={() => setApproveConfirm(true)}
+                  >
+                    Approve
+                  </Button>
+                </View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    disabled={disableActions}
+                    mode={'contained'}
+                    onPress={() => setRejectConfirm(true)}
+                  >
+                    Reject
+                  </Button>
+                </View>
               </View>
-              <View style={styles.buttonContainer}>
-                <Button disabled={disableActions} mode={'contained'} onPress={() => setRejectConfirm(true)}>
-                  Reject
-                </Button>
-
+            )}
+            {onNextClick && (
+              <View>
+                {' '}
+                <Text style={styles.footer}>
+                  {index + 1}/{count}
+                </Text>
               </View>
-
-            </View>}
-            {onNextClick && <View> <Text style={styles.footer}>{index + 1}/{count}</Text></View>}
+            )}
           </SwipeGesture>
-
         </Card>
       </ScrollView>
     </View>
@@ -162,7 +175,7 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     textAlign: 'right',
-    size: '9'
+    size: '9',
   },
   container: {
     flex: 1,

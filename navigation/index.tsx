@@ -18,8 +18,7 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 import SearchCardsScreen from '../screens/SearchCardsScreen';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { Icon } from 'react-native-elements';
-import VoiceSearch from '../screens/VoiceSearch';
+import VoiceSearchScreen from '../screens/VoiceSearchScreen';
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -59,23 +58,23 @@ function RootDrawer() {
   return (
     <Drawer.Navigator drawerContent={(props: any) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Notifications" component={NotificationsScreen}
-        options={({ navigation, route }) => ({
-          drawerIcon: config => <FontAwesome
+        options={({ navigation, route } : any) => ({
+          drawerIcon: (config : any) => <FontAwesome
             name='bell'
             size={23}
           ></FontAwesome>,
         })} />
       <Drawer.Screen name="Search Cards" component={SearchCardsScreen}
         options={{
-          drawerIcon: config => <FontAwesome
+          drawerIcon: (config : any) => <FontAwesome
             name='vcard-o'
             size={23}
           ></FontAwesome>
         }}
       />
-      <Drawer.Screen name="Search" component={VoiceSearch}
+      <Drawer.Screen name="Search" component={VoiceSearchScreen}
         options={{
-          drawerIcon: config => <FontAwesome
+          drawerIcon: (config : any) => <FontAwesome
             name='microphone'
             size={23}
           ></FontAwesome>
@@ -132,7 +131,7 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'Cards'>) => ({
           title: 'Cards',
           unmountInactiveRoutes: true,
-          tabBarIcon: ({ color }) => <TabBarIcon name="link" color={color} />,
+          tabBarIcon: ({ color } : {color : string}) => <TabBarIcon name="link" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => dispatch(logoutAction())}
@@ -154,7 +153,7 @@ function BottomTabNavigator() {
         component={NotificationsScreen}
         options={{
           title: 'Notifications',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color } : {color : string}) => <TabBarIcon name="code" color={color} />,
         }}
       />
     </BottomTab.Navigator>
