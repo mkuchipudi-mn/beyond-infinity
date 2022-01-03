@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import DialogInput from 'react-native-dialog-input';
 import { Card } from 'react-native-paper';
 import { Button, TextInput } from 'react-native-paper';
+import { SwipeGesture } from './SwipeGesture';
 
 export const NotificationsDetailsView = ({
   claimDetails,
@@ -17,6 +18,8 @@ export const NotificationsDetailsView = ({
   hasNext,
   onPrevClick,
   onNextClick,
+  index,
+  count,
 }: {
   claimDetails: any;
   onBackClick: any;
@@ -28,11 +31,48 @@ export const NotificationsDetailsView = ({
   hasNext: any,
   onPrevClick: any,
   onNextClick: any,
+  index: number,
+  count: number,
 }) => {
   const [approveConfirm, setApproveConfirm] = useState(false);
   const [rejectConfirm, setRejectConfirm] = useState(false);
   const claimStatus = claimDetails.find((item: any) => item.label === 'Claim Status');
   const disableActions = claimStatus && claimStatus.value !== 'Pending Approval';
+
+  const onSwipePerformed = (action) => {
+    /// action : 'left' for left swipe
+    /// action : 'right' for right swipe
+    /// action : 'up' for up swipe
+    /// action : 'down' for down swipe
+
+    switch (action) {
+      case 'left': {
+        if (hasNext) {
+          onNextClick();
+        }
+        console.log('left Swipe performed');
+        break;
+      }
+      case 'right': {
+        if (hasPrev) {
+          onPrevClick();
+        }
+        console.log('right Swipe performed');
+        break;
+      }
+      case 'up': {
+        console.log('up Swipe performed');
+        break;
+      }
+      case 'down': {
+        console.log('down Swipe performed');
+        break;
+      }
+      default: {
+        console.log('Undeteceted action');
+      }
+    }
+  }
 
   const onClickApproveAction = (text: string) => {
     setApproveConfirm(false);
@@ -83,41 +123,34 @@ export const NotificationsDetailsView = ({
       ></DialogInput>
       <ScrollView>
         <Card>
-          <View style={styles.itemhead}>
-            {hasPrev && <FontAwesome
-              name='chevron-left'
-              size={23}
-              onPress={() => onPrevClick()}
-            ></FontAwesome>}
-
-            <Text style={styles.headingStyle}>{headerTitle}</Text>
-            {hasNext && <FontAwesome
-              name='chevron-right'
-              size={23}
-              onPress={() => onNextClick()}
-            ></FontAwesome>}
-          </View>
-          <FlatList
-            data={claimDetails}
-            renderItem={({ item }) => (
-              <View style={styles.itemhead}>
-                <Text style={styles.itemFirst}>{item.label}</Text>
-                <Text style={styles.itemSecond}>{item.value}</Text>
+          <SwipeGesture
+            onSwipePerformed={onSwipePerformed}>
+            <Text style={styles.headingStyle}> {headerTitle}</Text>
+            <FlatList
+              data={claimDetails}
+              renderItem={({ item }) => (
+                <View style={styles.itemhead}>
+                  <Text style={styles.itemFirst}>{item.label}</Text>
+                  <Text style={styles.itemSecond}>{item.value}</Text>
+                </View>
+              )}
+            />
+            {!hideButtons && <View style={styles.buttonGroup}>
+              <View style={styles.buttonContainer}>
+                <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
+                  Approve
+                </Button>
               </View>
-            )}
-          />
-          {!hideButtons && <View style={styles.buttonGroup}>
-            <View style={styles.buttonContainer}>
-              <Button disabled={disableActions} mode={'contained'} onPress={() => setApproveConfirm(true)}>
-                Accept
-              </Button>
-            </View>
-            <View style={styles.buttonContainer}>
-              <Button disabled={disableActions} mode={'contained'} onPress={() => setRejectConfirm(true)}>
-                Reject
-              </Button>
-            </View>
-          </View>}
+              <View style={styles.buttonContainer}>
+                <Button disabled={disableActions} mode={'contained'} onPress={() => setRejectConfirm(true)}>
+                  Reject
+                </Button>
+
+              </View>
+
+            </View>}
+            {onNextClick && <View> <Text style={styles.footer}>{index + 1}/{count}</Text></View>}
+          </SwipeGesture>
 
         </Card>
       </ScrollView>
@@ -126,6 +159,11 @@ export const NotificationsDetailsView = ({
 };
 
 const styles = StyleSheet.create({
+  footer: {
+    flex: 1,
+    textAlign: 'right',
+    size: '9'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -143,7 +181,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headingStyle: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontWeight: 'bold',
     fontSize: 18,
     marginTop: 0,

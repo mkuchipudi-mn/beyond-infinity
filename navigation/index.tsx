@@ -19,7 +19,7 @@ import SearchCardsScreen from '../screens/SearchCardsScreen';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { Icon } from 'react-native-elements';
-import VoiceTest from '../screens/Voicetest';
+import VoiceSearch from '../screens/VoiceSearch';
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -65,7 +65,7 @@ function RootDrawer() {
             size={23}
           ></FontAwesome>,
         })} />
-      <Drawer.Screen name="Cards" component={SearchCardsScreen}
+      <Drawer.Screen name="Search Cards" component={SearchCardsScreen}
         options={{
           drawerIcon: config => <FontAwesome
             name='vcard-o'
@@ -73,10 +73,10 @@ function RootDrawer() {
           ></FontAwesome>
         }}
       />
-      <Drawer.Screen name="Search" component={VoiceTest}
+      <Drawer.Screen name="Search" component={VoiceSearch}
         options={{
           drawerIcon: config => <FontAwesome
-            name='search'
+            name='microphone'
             size={23}
           ></FontAwesome>
         }}

@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Formulary ID",
+        "field": "ExtFormularyId"
+    },
+    {
+        "name": "Formulary Name",
+        "field": "FormularyName"
+    },
+    {
+        "name": "Status",
+        "field": "LifecycleStatus"
+    },
+    {
+        "name": "Is Formulary Published",
+        "field": "WasFormularyPublished"
+    },
+    {
+        "name": "PBM Member Name",
+        "field": "Pbm.MemberName"
+    }
+]
