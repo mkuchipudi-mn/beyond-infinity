@@ -25,14 +25,14 @@ export const NotificationsDetailsView = ({
   onBackClick: any;
   onClickApprove: any;
   onClickReject: any;
-  hideButtons: boolean;
-  headerTitle: any;
-  hasPrev: any;
-  hasNext: any;
-  onPrevClick: any;
-  onNextClick: any;
-  index: number;
-  count: number;
+  hideButtons?: boolean;
+  headerTitle?: any;
+  hasPrev?: any;
+  hasNext?: any;
+  onPrevClick?: any;
+  onNextClick?: any;
+  index?: number;
+  count?: number;
 }) => {
   const [approveConfirm, setApproveConfirm] = useState(false);
   const [rejectConfirm, setRejectConfirm] = useState(false);
@@ -153,12 +153,9 @@ export const NotificationsDetailsView = ({
               </View>
             )}
             {onNextClick && (
-              <View>
-                {' '}
                 <Text style={styles.footer}>
                   {index + 1}/{count}
                 </Text>
-              </View>
             )}
           </SwipeGesture>
         </Card>

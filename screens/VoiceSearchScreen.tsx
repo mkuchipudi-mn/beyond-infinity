@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import Voice, { SpeechResultsEvent, SpeechErrorEvent } from '@react-native-voice/voice';
+//import Voice, { SpeechResultsEvent, SpeechErrorEvent } from '@react-native-voice/voice';
 import SearchService from '../services/Search.service';
 import { mapSearchDetails } from '../utils/map';
 import { NotificationsDetailsView } from '../components/NotificationsDetailsView';
@@ -65,7 +65,7 @@ export default function VoiceSearchScreen() {
   };
 
   useEffect(() => {
-    function onSpeechResults(e: SpeechResultsEvent) {
+    /*function onSpeechResults(e: SpeechResultsEvent) {
       setResult('strategy demo');
       //setResult((e.value && e.value.length > 0) ? e.value[0] : '');
     }
@@ -76,7 +76,7 @@ export default function VoiceSearchScreen() {
     Voice.onSpeechResults = onSpeechResults;
     return function cleanup() {
       Voice.destroy().then(Voice.removeAllListeners);
-    };
+    };*/
   }, []);
 
   async function toggleListening() {
@@ -112,7 +112,7 @@ export default function VoiceSearchScreen() {
   }
 
   return (
-    <ScrollView>
+    <>
       {detailsIndex < 0 && (
         <VoiceSearchButton toggleListening={toggleListening}></VoiceSearchButton>
       )}
@@ -132,6 +132,6 @@ export default function VoiceSearchScreen() {
           count={count}
         />
       )}
-    </ScrollView>
+    </>
   );
 }
