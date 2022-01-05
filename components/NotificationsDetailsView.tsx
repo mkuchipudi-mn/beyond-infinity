@@ -136,24 +136,20 @@ export const NotificationsDetailsView = ({
             />
             {!hideButtons && (
               <View style={styles.buttonGroup}>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    disabled={disableActions}
-                    mode={'contained'}
-                    onPress={() => setApproveConfirm(true)}
-                  >
-                    Approve
-                  </Button>
-                </View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    disabled={disableActions}
-                    mode={'contained'}
-                    onPress={() => setRejectConfirm(true)}
-                  >
-                    Reject
-                  </Button>
-                </View>
+                <Button
+                  disabled={disableActions}
+                  mode={'contained'}
+                  onPress={() => setApproveConfirm(true)}
+                >
+                  Approve
+                </Button>
+                <Button
+                  disabled={disableActions}
+                  mode={'contained'}
+                  onPress={() => setRejectConfirm(true)}
+                >
+                  Reject
+                </Button>
               </View>
             )}
             {onNextClick && (

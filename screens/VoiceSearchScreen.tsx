@@ -5,6 +5,7 @@ import SearchService from '../services/Search.service';
 import { mapSearchDetails } from '../utils/map';
 import { NotificationsDetailsView } from '../components/NotificationsDetailsView';
 import { FontAwesome } from '@expo/vector-icons';
+import { VoiceSearchButton } from './VoiceSearchButton';
 //import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function VoiceSearch() {
@@ -114,12 +115,7 @@ export default function VoiceSearch() {
   return (
     <View>
       {detailsIndex < 0 && (
-        <View style={styles.container}>
-          <Text>Press the button and start speaking.</Text>
-          <TouchableOpacity onPressIn={toggleListening} onPressOut={toggleListening}>
-            <FontAwesome name='microphone' size={40}></FontAwesome>
-          </TouchableOpacity>
-        </View>
+        <VoiceSearchButton toggleListening={toggleListening}></VoiceSearchButton>
       )}
       {detailsIndex >= 0 && (
         <NotificationsDetailsView
