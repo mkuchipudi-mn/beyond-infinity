@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 import Voice, { SpeechResultsEvent, SpeechErrorEvent } from '@react-native-voice/voice';
 import SearchService from '../services/Search.service';
 import { mapSearchDetails } from '../utils/map';
 import { NotificationsDetailsView } from '../components/NotificationsDetailsView';
-import { FontAwesome } from '@expo/vector-icons';
 import { VoiceSearchButton } from './VoiceSearchButton';
-//import { TouchableOpacity } from "react-native-gesture-handler";
+const searchService = new SearchService();
 
-export default function VoiceSearch() {
+export default function VoiceSearchScreen() {
   const [result, setResult] = useState('');
   const [isListening, setIsListening] = useState<any>(false);
   const [data, setData] = useState<any>({});
   const supportedModules = ['strategy', 'formulary'];
-  const searchService = new SearchService();
+
   const [detailsIndex, setDetailsIndex] = useState(-1);
   const [meta, setMeta] = useState();
   const [count, setCount] = useState(0);
@@ -113,7 +112,7 @@ export default function VoiceSearch() {
   }
 
   return (
-    <View>
+    <ScrollView>
       {detailsIndex < 0 && (
         <VoiceSearchButton toggleListening={toggleListening}></VoiceSearchButton>
       )}
@@ -133,15 +132,6 @@ export default function VoiceSearch() {
           count={count}
         />
       )}
-    </View>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});

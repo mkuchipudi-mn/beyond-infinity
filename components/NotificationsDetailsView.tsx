@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     textAlign: 'right',
-    size: '9',
   },
   container: {
     flex: 1,

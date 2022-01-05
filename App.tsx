@@ -1,4 +1,5 @@
 import React from 'react';
+import { registerRootComponent } from 'expo';
 import IndexApp from './Index';
 import { Store } from './store/store';
 import { ThemeProvider } from 'styled-components';
@@ -19,3 +20,5 @@ export default function App() {
     </Store>
   );
 }
+
+registerRootComponent(App);
