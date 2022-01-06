@@ -16,6 +16,14 @@
         "field": "pymtPkgType"
     },
     {
+        "name": "Payee ID",
+        "field": "payee.MemberName"
+    },
+    {
+        "name": "Payee Name",
+        "field": "payee.GroupFullname"
+    },
+    {
         "name": "Total Payment Package Amount",
         "field": "totalPmtAmount"
     },
