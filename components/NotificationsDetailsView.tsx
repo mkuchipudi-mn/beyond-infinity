@@ -98,6 +98,8 @@ export const NotificationsDetailsView = ({
         Back
       </Button>
 
+      <Text style={styles.headingStyle}> {headerTitle}</Text>
+
       <DialogInput
         isDialogVisible={approveConfirm}
         title={'Approval Reason'}
@@ -124,7 +126,6 @@ export const NotificationsDetailsView = ({
       <ScrollView>
         <Card>
           <SwipeGesture onSwipePerformed={onSwipePerformed}>
-            <Text style={styles.headingStyle}> {headerTitle}</Text>
             <FlatList
               contentContainerStyle={styles.detailscontainer}
               data={claimDetails}
@@ -195,11 +196,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headingStyle: {
-    textAlign: 'left',
+    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 18,
-    margin: 10,
-    width: 200,
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    width: '100%', 
+    fontFamily: 'fangsong'
   },
   backTextWhite: {
     color: '#FFF',
@@ -282,7 +285,8 @@ const styles = StyleSheet.create({
   detailscontainer: {
     flex: 1,
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: 25,
+    marginTop:10,
   },
   separator: {
     marginVertical: 30,
