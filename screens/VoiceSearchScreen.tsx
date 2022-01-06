@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ScrollView } from 'react-native';
 import Voice, { SpeechResultsEvent, SpeechErrorEvent } from '@react-native-voice/voice';
 import SearchService from '../services/Search.service';
@@ -8,6 +8,7 @@ import { VoiceSearchButton } from './VoiceSearchButton';
 const searchService = new SearchService();
 
 export default function VoiceSearchScreen() {
+  const resVal = useRef('');
   const [result, setResult] = useState('');
   const [isListening, setIsListening] = useState<any>(false);
   const [data, setData] = useState<any>({});
@@ -41,11 +42,12 @@ export default function VoiceSearchScreen() {
     setDetailsIndex(-1);
   };
 
-  const fetchData = async () => {
+  const fetchData = async (result1: any) => {
     //if (result == '') return [];
     const objDetails = require('../config/resources/search/index.json');
     const pavan = 'pavan';
-    const result1 = 'strategy demo';
+    //const result1 = 'strategy demo';
+    //const result1 = result;
     const module = result1.split(' ')[0].toLowerCase();
     let { object, body } = objDetails[module];
 
@@ -69,8 +71,9 @@ export default function VoiceSearchScreen() {
 
   useEffect(() => {
     function onSpeechResults(e: SpeechResultsEvent) {
-      setResult('strategy demo');
-      //setResult((e.value && e.value.length > 0) ? e.value[0] : '');
+      //setResult('strategy demo');
+      setResult((e.value && e.value.length > 0) ? e.value[0] : '');
+      resVal.current = (e.value && e.value.length > 0) ? e.value[0] : '';
     }
     function onSpeechError(e: SpeechErrorEvent) {
       console.error(e);
@@ -85,12 +88,13 @@ export default function VoiceSearchScreen() {
   async function toggleListening() {
     try {
       if (isListening) {
-        // await Voice.stop();
+        await Voice.stop();
         //const pavan = 'pavan';
-        const result1 = 'formulary pavan';
-        setResult('formulary pavan');
+        //const result1 = 'formulary pavan';
+        //setResult('formulary pavan');
+        const result1 = resVal.current;
         setIsListening(false);
-        setMessage('Fetching results for \n' + result);
+        setMessage('Fetching results for \n' + result1);
         setLoader(true);
         if (!decodeMessage(result1)) {
           //show banner and reset
@@ -99,9 +103,9 @@ export default function VoiceSearchScreen() {
           //setResult('');
         } else {
           //fetch details and display
-          const data1 = await fetchData();
+          const data1 = await fetchData(result1);
           if (data1.length == 0) {
-            setMessage('No results found for \n' + result);
+            setMessage('No results found for \n' + result1);
             //display not found
           } else {
             setDetailsIndex(0);
@@ -109,8 +113,9 @@ export default function VoiceSearchScreen() {
         }
       } else {
         setResult('');
+        resVal.current = '';
         setMessage('');
-        //await Voice.start("en-US");
+        await Voice.start("en-US");
         setIsListening(true);
       }
       setLoader(false);
