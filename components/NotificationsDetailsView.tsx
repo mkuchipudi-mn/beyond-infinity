@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import DialogInput from 'react-native-dialog-input';
 import { Card } from 'react-native-paper';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, FAB } from 'react-native-paper';
 import { SwipeGesture } from './SwipeGesture';
 
 export const NotificationsDetailsView = ({
@@ -98,6 +98,8 @@ export const NotificationsDetailsView = ({
         Back
       </Button>
 
+      <Text style={styles.headingStyle}> {headerTitle}</Text>
+
       <DialogInput
         isDialogVisible={approveConfirm}
         title={'Approval Reason'}
@@ -124,9 +126,8 @@ export const NotificationsDetailsView = ({
       <ScrollView>
         <Card>
           <SwipeGesture onSwipePerformed={onSwipePerformed}>
-            <Text style={styles.headingStyle}> {headerTitle}</Text>
             <FlatList
-             contentContainerStyle ={styles.detailscontainer}
+              contentContainerStyle={styles.detailscontainer}
               data={claimDetails}
               renderItem={({ item }) => (
                 <View style={styles.itemhead}>
@@ -137,26 +138,34 @@ export const NotificationsDetailsView = ({
             />
             {!hideButtons && (
               <View style={styles.buttonGroup}>
+
                 <Button
+                  disabled={disableActions}
+                  mode={'contained'}
+                  icon="cancel"
+                  onPress={() => setRejectConfirm(true)}
+                  style={styles.fab}
+                >
+                  <Text style={styles.fabText}>Reject</Text>
+                </Button>
+
+                <Button
+                  icon="check"
                   disabled={disableActions}
                   mode={'contained'}
                   onPress={() => setApproveConfirm(true)}
+                  style={styles.fab}
                 >
-                  Approve
+                  <Text style={styles.fabText}>Approve</Text>
                 </Button>
-                <Button
-                  disabled={disableActions}
-                  mode={'contained'}
-                  onPress={() => setRejectConfirm(true)}
-                >
-                  Reject
-                </Button>
+
+
               </View>
             )}
             {onNextClick && (
-                <Text style={styles.footer}>
-                  {index + 1}/{count}
-                </Text>
+              <Text style={styles.footer}>
+                {index + 1}/{count}
+              </Text>
             )}
           </SwipeGesture>
         </Card>
@@ -187,14 +196,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headingStyle: {
-    textAlign: 'left',
+    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 18,
-    margin: 10,
-    width: 200,
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    width: '100%', 
+    fontFamily: 'fangsong'
   },
   backTextWhite: {
     color: '#FFF',
+  },
+  fab: {
+    margin: 10,
+    borderRadius: 20,
+    width: 130
+  },
+  fabText: {
+    fontSize: 11,
+    letterSpacing: 1.25,
+    lineHeight: 16,
   },
   rowFront: {
     backgroundColor: '#FFF',
@@ -264,7 +285,8 @@ const styles = StyleSheet.create({
   detailscontainer: {
     flex: 1,
     justifyContent: 'center',
-    marginLeft:10,
+    marginLeft: 25,
+    marginTop:10,
   },
   separator: {
     marginVertical: 30,
@@ -272,12 +294,16 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   buttonGroup: {
-    paddingTop: 100,
+    paddingTop: 80,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 400,
+    margin: 10,
+  },
+  buttonReject: {
+    marginRight: 10,
+    flex: 1,
   },
   buttonContainer: {
     flex: 1,

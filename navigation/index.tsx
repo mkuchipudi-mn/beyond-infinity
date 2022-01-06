@@ -72,7 +72,7 @@ function RootDrawer() {
           ></FontAwesome>
         }}
       />
-      <Drawer.Screen name="Search" component={VoiceSearchScreen}
+      <Drawer.Screen name="Voice Search" component={VoiceSearchScreen}
         options={{
           drawerIcon: (config : any) => <FontAwesome
             name='microphone'
