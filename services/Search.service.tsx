@@ -4,7 +4,7 @@ export default class SearchService {
     constructor() { }
 
     public async search(obj: string, body: object) {
-        body = { "moduleName": "mco", "orgFilter": { "onlyOrgSearch": false, "orgList": [], "directOrgAssociation": true }, "startRowIndex": 1, "searchName": "Formulary", "selectList": ["Pk", "MgrId", "VerNumber", "ExtFormularyId", "FormularyName", "Pbm.MemberName", "Pbm.GroupFullname", "EffectiveStartDate", "EffectiveEndDate", "LifecycleStatus", "WasFormularyPublished"], "sortTermList": [], "resultLimit": 11, "searchTermList": [{ "operator": "startsWith", "attribute": { "name": "FormularyName", "value": "pavan" } }] };
+        //body = { "moduleName": "mco", "orgFilter": { "onlyOrgSearch": false, "orgList": [], "directOrgAssociation": true }, "startRowIndex": 1, "searchName": "Formulary", "selectList": ["Pk", "MgrId", "VerNumber", "ExtFormularyId", "FormularyName", "Pbm.MemberName", "Pbm.GroupFullname", "EffectiveStartDate", "EffectiveEndDate", "LifecycleStatus", "WasFormularyPublished"], "sortTermList": [], "resultLimit": 11, "searchTermList": [{ "operator": "startsWith", "attribute": { "name": "FormularyName", "value": "pavan" } }] };
         //const resposeData = await fetch(BASE_SERVICE_URL + '/rest/data/Formulary/search', {
         const resposeData = await fetch(BASE_SERVICE_URL + '/rest/data/' + obj + '/search', {
             method: 'post',

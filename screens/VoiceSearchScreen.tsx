@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
-//import Voice, { SpeechResultsEvent, SpeechErrorEvent } from '@react-native-voice/voice';
+import Voice, { SpeechResultsEvent, SpeechErrorEvent } from '@react-native-voice/voice';
 import SearchService from '../services/Search.service';
 import { mapSearchDetails } from '../utils/map';
 import { NotificationsDetailsView } from '../components/NotificationsDetailsView';
@@ -14,6 +14,7 @@ export default function VoiceSearchScreen() {
   const supportedModules = ['strategy', 'formulary'];
 
   const [detailsIndex, setDetailsIndex] = useState(-1);
+  const [loader, setLoader] = useState(false);
   const [meta, setMeta] = useState();
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('');
@@ -23,6 +24,7 @@ export default function VoiceSearchScreen() {
 
   const onBackClick = () => {
     setDetailsIndex(-1);
+    setMessage('');
   };
   const onPrevClick = () => {
     setDetailsIndex(detailsIndex - 1);
@@ -40,11 +42,12 @@ export default function VoiceSearchScreen() {
   };
 
   const fetchData = async () => {
+    //if (result == '') return [];
     const objDetails = require('../config/resources/search/index.json');
     const pavan = 'pavan';
-    const result1 = 'formulary pavan';
+    const result1 = 'strategy demo';
     const module = result1.split(' ')[0].toLowerCase();
-    let { object, body } = objDetails[result1.split(' ')[0].toLowerCase()];
+    let { object, body } = objDetails[module];
 
     body = JSON.parse(
       JSON.stringify(body).replace('VALUE_PLACEHOLDER', result1.split(' ')[1].toLowerCase())
@@ -65,7 +68,7 @@ export default function VoiceSearchScreen() {
   };
 
   useEffect(() => {
-    /*function onSpeechResults(e: SpeechResultsEvent) {
+    function onSpeechResults(e: SpeechResultsEvent) {
       setResult('strategy demo');
       //setResult((e.value && e.value.length > 0) ? e.value[0] : '');
     }
@@ -76,26 +79,29 @@ export default function VoiceSearchScreen() {
     Voice.onSpeechResults = onSpeechResults;
     return function cleanup() {
       Voice.destroy().then(Voice.removeAllListeners);
-    };*/
+    };
   }, []);
 
   async function toggleListening() {
     try {
       if (isListening) {
-        //await Voice.stop();
-        const pavan = 'pavan';
-        const result1 = 'strategy demo';
-        setResult('strategy demo');
+        // await Voice.stop();
+        //const pavan = 'pavan';
+        const result1 = 'formulary pavan';
+        setResult('formulary pavan');
         setIsListening(false);
+        setMessage('Fetching results for \n' + result);
+        setLoader(true);
         if (!decodeMessage(result1)) {
           //show banner and reset
-          setMessage('Sorry I cant understand \n' + result);
+
+          setMessage("Sorry I can't understand \n" + result1);
           //setResult('');
         } else {
           //fetch details and display
           const data1 = await fetchData();
           if (data1.length == 0) {
-            setMessage('Object not found\n' + result);
+            setMessage('No results found for \n' + result);
             //display not found
           } else {
             setDetailsIndex(0);
@@ -103,9 +109,11 @@ export default function VoiceSearchScreen() {
         }
       } else {
         setResult('');
+        setMessage('');
         //await Voice.start("en-US");
         setIsListening(true);
       }
+      setLoader(false);
     } catch (e) {
       console.error(e);
     }
@@ -114,14 +122,14 @@ export default function VoiceSearchScreen() {
   return (
     <>
       {detailsIndex < 0 && (
-        <VoiceSearchButton toggleListening={toggleListening}></VoiceSearchButton>
+        <VoiceSearchButton loader={loader} message={message} toggleListening={toggleListening}></VoiceSearchButton>
       )}
       {detailsIndex >= 0 && (
         <NotificationsDetailsView
           claimDetails={mapSearchDetails(data, meta, detailsIndex)}
           onBackClick={onBackClick}
           hideButtons={true}
-          headerTitle={result}
+          headerTitle={'Results for ' + result}
           hasNext={detailsIndex < count - 1}
           hasPrev={detailsIndex > 0}
           onPrevClick={onPrevClick}
