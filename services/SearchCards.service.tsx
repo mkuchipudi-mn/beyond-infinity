@@ -5,13 +5,39 @@ export default class SearchCardsService {
 
   public async getSearchCards() {
     const body = {
-      resultLimit: 15,
-      searchName: 'SalesPersistedSearch',
       moduleName: 'admin',
-      selectList: ['SearchXML', 'UserModel', 'Name', 'SavedFromFolder', 'TYPE'],
-      searchTermList: [],
-      sortTermList: [],
-      includeRowCount: true,
+      orgFilter: {
+        directOrgAssociation: true,
+        onlyOrgSearch: false,
+        orgList: [],
+      },
+      startRowIndex: '0',
+      select: [
+        'UserModel',
+        'SearchXML',
+        'ManagedSearch',
+        'LinkToHomepage',
+        'SearchCard',
+        'DateUpdated',
+        'RefreshCardDate',
+      ],
+      searchTermList: [
+        {
+          attribute: {
+            name: 'SavedFromFolder',
+            value: 'IndirectSaleOpen',
+          },
+          operator: 'eq',
+        },
+      ],
+      resultLimit: 100,
+      sortTermList: [
+        {
+          fullName: 'priorityOrder',
+          descending: 'false',
+        },
+      ],
+      searchName: 'PersistedSearch',
     };
     const responseData = await fetch(BASE_SERVICE_URL + '/rest/data/PersistedSearch/search', {
       method: 'post',
