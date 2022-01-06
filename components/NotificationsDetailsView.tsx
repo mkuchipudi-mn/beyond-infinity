@@ -126,11 +126,12 @@ export const NotificationsDetailsView = ({
           <SwipeGesture onSwipePerformed={onSwipePerformed}>
             <Text style={styles.headingStyle}> {headerTitle}</Text>
             <FlatList
+             contentContainerStyle ={styles.detailscontainer}
               data={claimDetails}
               renderItem={({ item }) => (
                 <View style={styles.itemhead}>
                   <Text style={styles.itemFirst}>{item.label}</Text>
-                  <Text style={styles.itemSecond}>{item.value}</Text>
+                  <Text style={styles.itemSecond}> :  {item.value}</Text>
                 </View>
               )}
             />
@@ -179,17 +180,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   itemFirst: {
-    width: 150,
+    width: '50%',
   },
   itemSecond: {
-    width: 300,
+    width: '50%',
     fontWeight: 'bold',
   },
   headingStyle: {
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: 18,
-    marginTop: 0,
+    margin: 10,
     width: 200,
   },
   backTextWhite: {
@@ -262,8 +263,8 @@ const styles = StyleSheet.create({
 
   detailscontainer: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    marginLeft:10,
   },
   separator: {
     marginVertical: 30,
