@@ -20,9 +20,9 @@ export default function VoiceSearchScreen() {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('');
   const decodeMessage = (message: string) => {
-    return supportedModules.includes(message.split(' ')[0].toLowerCase())
+    return message.split(' ').length > 1 && (supportedModules.includes(message.split(' ')[0].toLowerCase())
       || supportedModules.includes(message.split(' ')[0].toLowerCase() +
-        message.split(' ')[1].toLowerCase());
+        message.split(' ')[1].toLowerCase()));
   };
 
   const onBackClick = () => {
@@ -99,6 +99,7 @@ export default function VoiceSearchScreen() {
 
   async function onMicrophoneHold() {
     try {
+      setLoader(false);
       setResult('');
       resVal.current = '';
       setMessage('');
@@ -111,7 +112,7 @@ export default function VoiceSearchScreen() {
   }
   async function onMicrophoneRelease() {
     try {
-      //await Voice.stop();
+      await Voice.stop();
       //const pavan = 'pavan';
       //const result1 = 'formulary pavan';
       //setResult('formulary pavan');
