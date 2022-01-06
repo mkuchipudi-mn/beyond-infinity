@@ -12,7 +12,7 @@ export default function VoiceSearchScreen() {
   const [result, setResult] = useState('');
   const [isListening, setIsListening] = useState<any>(false);
   const [data, setData] = useState<any>({});
-  const supportedModules = ['strategy', 'formulary'];
+  const supportedModules = ['strategy', 'formulary', 'paymentpackage'];
 
   const [detailsIndex, setDetailsIndex] = useState(-1);
   const [loader, setLoader] = useState(false);
@@ -20,7 +20,9 @@ export default function VoiceSearchScreen() {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState('');
   const decodeMessage = (message: string) => {
-    return supportedModules.includes(message.split(' ')[0].toLowerCase());
+    return supportedModules.includes(message.split(' ')[0].toLowerCase())
+      || supportedModules.includes(message.split(' ')[0].toLowerCase() +
+        message.split(' ')[0].toLowerCase());
   };
 
   const onBackClick = () => {
@@ -49,10 +51,14 @@ export default function VoiceSearchScreen() {
     //const result1 = 'strategy demo';
     //const result1 = result;
     const module = result1.split(' ')[0].toLowerCase();
+    let search_value = result1.split(' ')[1].toLowerCase();
+    if (module === 'payment') {
+      search_value = result1.split(' ')[2].toLowerCase();
+    }
     let { object, body } = objDetails[module];
 
     body = JSON.parse(
-      JSON.stringify(body).replace('VALUE_PLACEHOLDER', result1.split(' ')[1].toLowerCase())
+      JSON.stringify(body).replace('VALUE_PLACEHOLDER', search_value)
     );
     const data = await searchService.search(object, body);
     setData(data);
@@ -62,6 +68,8 @@ export default function VoiceSearchScreen() {
       meta = require(`../config/resources/strategy/DetailsPage/index.json`);
     } else if (object === 'Formulary') {
       meta = require(`../config/resources/formulary/DetailsPage/index.json`);
+    } else {
+      meta = require(`../config/resources/paymentpackage/DetailsPage/index.json`);
     }
 
     setMeta(meta);

@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Payment Package Id",
+        "field": "paymentPackageIdNum"
+    },
+    {
+        "name": "Payment Package Name",
+        "field": "PymtPkgName"
+    },
+    {
+        "name": "Payment Package Status",
+        "field": "pymtPkgStatus"
+    },
+    {
+        "name": "Payment Package Type",
+        "field": "pymtPkgType"
+    },
+    {
+        "name": "Total Payment Package Amount",
+        "field": "totalPmtAmount"
+    },
+    {
+        "name": "Total Estimated Payment Amount",
+        "field": "totalEstimatedPmtAmount"
+    }
+]

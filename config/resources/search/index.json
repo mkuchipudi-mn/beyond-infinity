@@ -73,5 +73,41 @@
                 }
             ]
         }
+    },
+    "payment package": {
+        "object": "PaymentPackage",
+        "body": {
+            "moduleName": "rebates",
+            "orgFilter": {
+                "onlyOrgSearch": false,
+                "orgList": [],
+                "directOrgAssociation": true
+            },
+            "startRowIndex": 1,
+            "searchName": "PaymentPackage",
+            "selectList": [
+                "Pk",
+                "paymentPackageIdNum",
+                "PymtPkgName",
+                "pymtPkgStatus",
+                "pymtPkgType",
+                "currency",
+                "totalPmtAmount",
+                "totalEstimatedPmtAmount",
+                "payee.MemberName",
+                "payee.GroupFullname"
+            ],
+            "sortTermList": [],
+            "resultLimit": 11,
+            "searchTermList": [
+                {
+                    "operator": "startsWith",
+                    "attribute": {
+                        "name": "PymtPkgName",
+                        "value": "VALUE_PLACEHOLDER"
+                    }
+                }
+            ]
+        }
     }
 }
