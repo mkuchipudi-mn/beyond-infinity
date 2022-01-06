@@ -22,7 +22,7 @@ export default function VoiceSearchScreen() {
   const decodeMessage = (message: string) => {
     return supportedModules.includes(message.split(' ')[0].toLowerCase())
       || supportedModules.includes(message.split(' ')[0].toLowerCase() +
-        message.split(' ')[0].toLowerCase());
+        message.split(' ')[1].toLowerCase());
   };
 
   const onBackClick = () => {
@@ -78,10 +78,12 @@ export default function VoiceSearchScreen() {
   };
 
   useEffect(() => {
+    //resVal.current = 'payment package Demo';
     function onSpeechResults(e: SpeechResultsEvent) {
       //setResult('strategy demo');
       setResult((e.value && e.value.length > 0) ? e.value[0] : '');
       resVal.current = (e.value && e.value.length > 0) ? e.value[0] : '';
+      //resVal.current = 'strategy demo';
     }
     function onSpeechError(e: SpeechErrorEvent) {
       console.error(e);
@@ -93,39 +95,47 @@ export default function VoiceSearchScreen() {
     };
   }, []);
 
-  async function toggleListening() {
-    try {
-      if (isListening) {
-        await Voice.stop();
-        //const pavan = 'pavan';
-        //const result1 = 'formulary pavan';
-        //setResult('formulary pavan');
-        const result1 = resVal.current;
-        setIsListening(false);
-        setMessage('Fetching results for \n' + result1);
-        setLoader(true);
-        if (!decodeMessage(result1)) {
-          //show banner and reset
 
-          setMessage("Sorry I can't understand \n" + result1);
-          //setResult('');
-        } else {
-          //fetch details and display
-          const data1 = await fetchData(result1);
-          if (data1.length == 0) {
-            setMessage('No results found for \n' + result1);
-            //display not found
-          } else {
-            setDetailsIndex(0);
-          }
-        }
+
+  async function onMicrophoneHold() {
+    try {
+      setResult('');
+      resVal.current = '';
+      setMessage('');
+      await Voice.start("en-US");
+      setIsListening(true);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+  async function onMicrophoneRelease() {
+    try {
+      //await Voice.stop();
+      //const pavan = 'pavan';
+      //const result1 = 'formulary pavan';
+      //setResult('formulary pavan');
+      //resVal.current = "formulary pavan";
+      const result1 = resVal.current;
+      setIsListening(false);
+      setMessage('Fetching results for \n' + result1);
+      setLoader(true);
+      if (!decodeMessage(result1)) {
+        //show banner and reset
+
+        setMessage("Sorry I can't understand \n" + result1);
+        //setResult('');
       } else {
-        setResult('');
-        resVal.current = '';
-        setMessage('');
-        await Voice.start("en-US");
-        setIsListening(true);
+        //fetch details and display
+        const data1 = await fetchData(result1);
+        if (data1.length == 0) {
+          setMessage('No results found for \n' + result1);
+          //display not found
+        } else {
+          setDetailsIndex(0);
+        }
       }
+
       setLoader(false);
     } catch (e) {
       console.error(e);
@@ -135,7 +145,9 @@ export default function VoiceSearchScreen() {
   return (
     <>
       {detailsIndex < 0 && (
-        <VoiceSearchButton loader={loader} message={message} toggleListening={toggleListening}></VoiceSearchButton>
+        <VoiceSearchButton loader={loader} message={message} onMicrophoneHold={onMicrophoneHold}
+          onMicrophoneRelease={onMicrophoneRelease}
+        ></VoiceSearchButton>
       )}
       {detailsIndex >= 0 && (
         <NotificationsDetailsView

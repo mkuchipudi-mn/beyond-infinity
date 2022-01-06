@@ -3,11 +3,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Loader from 'react-native-three-dots-loader'
 
-export const VoiceSearchButton = ({ toggleListening, message, loader }: { toggleListening: any, message: any, loader: any }) => {
+export const VoiceSearchButton = ({ onMicrophoneHold, onMicrophoneRelease, message, loader }: { onMicrophoneRelease: any, onMicrophoneHold: any, message: any, loader: any }) => {
     return (
         <>
             <Text style={styles.message} >Hold to speak and release to search</Text>
-            <TouchableOpacity onPressIn={toggleListening} onPressOut={toggleListening}>
+            <TouchableOpacity onPressIn={onMicrophoneHold} onPressOut={onMicrophoneRelease}>
                 <FontAwesome name='microphone' style={styles.button} size={40}></FontAwesome>
                 <Text style={styles.message}>{message}</Text>
             </TouchableOpacity>
