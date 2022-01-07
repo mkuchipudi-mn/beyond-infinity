@@ -6,7 +6,7 @@ import Loader from 'react-native-three-dots-loader'
 export const VoiceSearchButton = ({ onMicrophoneHold, onMicrophoneRelease, message, loader }: { onMicrophoneRelease: any, onMicrophoneHold: any, message: any, loader: any }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.message} >Hold to speak and release to search</Text>
+            <Text style={styles.message} >What would you like to search ?</Text>
             <TouchableOpacity onPressIn={onMicrophoneHold} onPressOut={onMicrophoneRelease}>
                 <FontAwesome name='microphone' style={styles.button} size={65}></FontAwesome>
                 <Text style={styles.message}>{message}</Text>

@@ -57,7 +57,7 @@ function RootDrawer() {
 
   return (
     <Drawer.Navigator drawerContent={(props: any) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="Notifications" component={NotificationsScreen}
+      <Drawer.Screen name=" Notifications" component={NotificationsScreen}
         options={({ navigation, route } : any) => ({
           drawerIcon: (config : any) => <FontAwesome
             name='bell'
@@ -72,11 +72,11 @@ function RootDrawer() {
           ></FontAwesome>
         }}
       />
-      <Drawer.Screen name="Voice Search" component={VoiceSearchScreen}
+      <Drawer.Screen name="  Voice Search" component={VoiceSearchScreen}
         options={{
           drawerIcon: (config : any) => <FontAwesome
             name='microphone'
-            size={23}
+            size={28}
           ></FontAwesome>
         }}
       />
